@@ -1,0 +1,56 @@
+{
+  "name": "generator-sassdoc-theme",
+  "version": "0.1.0",
+  "description": "Scafold a new SassDoc theme",
+  "keywords": [
+    "yeoman-generator",
+    "sass",
+    "scss",
+    "doc",
+    "documentation"
+  ],
+  "author": {
+    "name": "Pascal Duez",
+    "url": "https://github.com/pascalduez"
+  },
+  "contributors": [
+    {
+      "name": "Fabrice Weinberg",
+      "url": "https://twitter.com/fweinb"
+    },
+    {
+      "name": "Valérian Galliat",
+      "url": "https://twitter.com/valeriangalliat"
+    },
+    {
+      "name": "Hugo Giraudel",
+      "url": "https://twitter.com/HugoGiraudel"
+    }
+  ],
+  "homepage": "https://github.com/SassDoc/generator-sassdoc-theme",
+  "bugs": "https://github.com/SassDoc/generator-sassdoc-theme/issues",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/SassDoc/generator-sassdoc-theme.git"
+  },
+  "license": {
+    "type": "unlicence",
+    "url": "http://unlicense.org"
+  },
+  "dependencies": {
+    "chalk": "^0.5.1",
+    "yeoman-generator": "^0.17.3",
+    "yosay": "^1.0.0"
+  },
+  "devDependencies": {},
+  "peerDependencies": {
+    "yo": ">=1.2.0"
+  },
+  "engines": {
+    "node": ">=0.10.0",
+    "npm": ">=1.2.10"
+  },
+  "scripts": {
+    "test": ""
+  }
+}

@@ -1,0 +1,9 @@
+Description:
+  Creates a new Jade view
+
+Example:
+  yo sassdoc-theme:jade
+
+  This will create:
+    index.js
+    views/index.jade

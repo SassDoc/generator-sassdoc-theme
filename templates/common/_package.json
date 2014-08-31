@@ -1,0 +1,15 @@
+{
+  "name": "<%= slugname %>",
+  "description": "<%= description %>",
+  "version": "<%= version %>",
+  "keywords": [
+    "sassdoctheme"
+  ],
+  "dependencies": {
+    "extend": "^1.0.0",
+    "themeleon": "^1.0.0"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  }
+}
