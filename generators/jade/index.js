@@ -6,7 +6,7 @@ var yeoman = require('yeoman-generator');
 var isset = require('../../utils').isset;
 
 
-var Generator = module.exports = function Generator(args, options, config) {
+var Generator = module.exports = function Generator(args, options) {
   yeoman.generators.Base.apply(this, arguments);
 
   this.useFilter = isset(this.options.useFilter) ? this.options.useFilter : true;

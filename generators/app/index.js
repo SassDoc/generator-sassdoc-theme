@@ -5,6 +5,7 @@ var util = require('util');
 var yeoman = require('yeoman-generator');
 var yosay = require('yosay');
 var chalk = require('chalk');
+var isset = require('../../utils').isset;
 
 
 var Generator = module.exports = function Generator(args, options) {
@@ -23,12 +24,10 @@ var Generator = module.exports = function Generator(args, options) {
   // this.config.set('themePath', this.env.options.themePath);
 
   this.option('init', {
-    alias: 'i',
     desc: 'Force to prompt question and re-initialize of .yo-rc.json',
     type: String,
     defaults: false
   });
-  this.init = this.options['init'] || this.options['i'] || false;
 
   this.option('themeEngine', {
     desc: 'Theme template engine.',
@@ -41,7 +40,8 @@ var Generator = module.exports = function Generator(args, options) {
     author: {
       name: this.user.git.name() || process.env.user || process.env.username
     },
-    themeEngine: this.options.themeEngine
+    themeEngine: this.options.themeEngine,
+    useSass: true
   });
 
   this.pkg = require('../../package.json');
@@ -63,7 +63,7 @@ Generator.prototype.welcome = function welcome() {
 Generator.prototype.askFor = function askFor() {
   var done = this.async();
 
-  var force = (!this.config.existed || this.init) ? true : false;
+  var force = (!this.config.existed || this.options.init) ? true : false;
 
   var questions = [];
 
@@ -85,6 +85,7 @@ Generator.prototype.askFor = function askFor() {
     default: '0.1.0'
   });
 
+  // Ask for which theme engine to use.
   (!this.config.get('themeEngine') || force) && questions.push({
     type: 'list',
     name: 'themeEngine',
@@ -112,6 +113,7 @@ Generator.prototype.askFor = function askFor() {
     }]
   });
 
+  // Ask for sassdoc-filter usage.
   questions.push({
     type: 'confirm',
     name: 'useFilter',
@@ -119,10 +121,27 @@ Generator.prototype.askFor = function askFor() {
     default: true
   });
 
+  // Ask for sassdoc-indexer usage.
   questions.push({
     type: 'confirm',
     name: 'useIndexer',
     message: 'Include and use sassdoc-indexer',
+    default: true
+  });
+
+  // Ask for Sass usage.
+  questions.push({
+    type: 'confirm',
+    name: 'useSass',
+    message: 'Use Sass for your theme stylesheets',
+    default: true
+  }, {
+    when: function (answers) {
+      return isset(answers) && isset(answers.useSass) && !answers.useSass;
+    },
+    type: 'confirm',
+    name: 'useSass',
+    message: chalk.red('Wait a second, u no want use Sass !?'),
     default: true
   });
 
@@ -137,6 +156,7 @@ Generator.prototype.askFor = function askFor() {
     this.themeEngine   = answers.themeEngine || this.config.get('themeEngine');
     this.useFilter     = answers.useFilter;
     this.useIndexer    = answers.useIndexer;
+    this.useSass       = answers.useSass;
 
     this.useMustache   = enabled('mustache');
     this.useSwig       = enabled('swig');
@@ -155,7 +175,9 @@ Generator.prototype.buildPackage = function packageFiles() {
   this.sourceRoot(path.join(__dirname, '../../templates/common'));
   this.template('_package.json', 'package.json');
   this.directory('assets');
-  this.directory('scss');
+  if (this.useSass) {
+    this.directory('scss');
+  }
 };
 
 Generator.prototype.buildViews = function buildViews(done) {

@@ -23,7 +23,7 @@ yo sassdoc-theme [options] [<themeName>]
 
 ## Options
 
-* `-i` alias `--init`
+* `--init`
 
   Force to prompt question and re-initialize .yo-rc.json.
 
