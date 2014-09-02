@@ -44,7 +44,7 @@ var Generator = module.exports = function Generator(args, options) {
     themeEngine: this.options.themeEngine
   });
 
-  this.pkg = require(path.join(__dirname, '../../package.json'));
+  this.pkg = require('../../package.json');
 };
 
 util.inherits(Generator, yeoman.generators.Base);
@@ -162,12 +162,12 @@ Generator.prototype.buildViews = function buildViews(done) {
   var generator = 'sassdoc-theme:' + (this.themeEngine).toLowerCase();
   var options = {
     'skip-message': this.options['skip-install-message'],
-    'skip-install': this.options['skip-install']
+    'skip-install': this.options['skip-install'],
+    useFilter: this.useFilter,
+    useIndexer: this.useIndexer
   };
 
-  this.invoke(generator, { options: options }, function () {
-
-  }.bind(this));
+  this.composeWith(generator, { options: options });
 };
 
 Generator.prototype.install = function () {
@@ -175,7 +175,7 @@ Generator.prototype.install = function () {
     return;
   }
 
-  this.on('end', function() {
+  this.on('end', function () {
     var done = this.async();
 
     this.installDependencies({
