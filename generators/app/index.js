@@ -109,8 +109,8 @@ Generator.prototype.askFor = function askFor() {
       value: 'nunjucks',
       checked: false
     }, {
-      name: 'Handelbars',
-      value: 'handelbars',
+      name: 'handlebars',
+      value: 'handlebars',
       checked: false
     }]
   });
@@ -164,7 +164,7 @@ Generator.prototype.askFor = function askFor() {
     this.useSwig       = enabled('swig');
     this.useJade       = enabled('jade');
     this.useNunjucks   = enabled('nunjucks');
-    this.useHandelbars = enabled('handelbars');
+    this.usehandlebars = enabled('handlebars');
 
     // Save config to .yo-rc.json
     this.config.set(answers);
