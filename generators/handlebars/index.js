@@ -16,21 +16,21 @@ var Generator = module.exports = function Generator(args, options) {
 util.inherits(Generator, yeoman.generators.Base);
 
 Generator.prototype.buildViews = function createViewFiles() {
-  this.sourceRoot(path.join(__dirname, '../../templates/nunjucks'));
+  this.sourceRoot(path.join(__dirname, '../../templates/handlebars'));
 
-  var index = 'index.nunjucks';
+  var index = 'index.handlebars';
   if (!this.useFilter && !this.useIndexer) {
-    index = 'index_bare.nunjucks';
+    index = 'index_bare.handlebars';
   }
   if (this.useFilter && !this.useIndexer) {
-    index = 'index_filter.nunjucks';
+    index = 'index_filter.handlebars';
   }
   if (!this.useFilter && this.useIndexer) {
-    index = 'index_indexer.nunjucks';
+    index = 'index_indexer.handlebars';
   }
 
   this.mkdir('views');
-  this.copy(path.join('views', index), 'views/index.nunjucks');
+  this.copy(path.join('views', index), 'views/index.handlebars');
   this.template('_index.js', 'index.js');
 }
 
@@ -41,7 +41,7 @@ Generator.prototype.install = function install() {
 
   var pkgs = {
     dependencies: [
-      'themeleon-nunjucks'
+      'themeleon-handlebars'
     ],
     devDependencies: []
   };

@@ -1,0 +1,9 @@
+Description:
+  Creates a new Handlebars view
+
+Example:
+  yo sassdoc-theme:handlebars
+
+  This will create:
+    index.js
+    views/index.handlebars

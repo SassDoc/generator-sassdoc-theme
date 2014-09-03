@@ -1,10 +1,10 @@
 /**
- * Themeleon template helper, using the Jade module.
+ * Themeleon template helper, using the Mustache module.
  *
  * See <https://github.com/themeleon/themeleon>.
- * See <https://github.com/themeleon/themeleon-jade>.
+ * See <https://github.com/themeleon/themeleon-mustache>.
  */
-var themeleon = require('themeleon')().use('jade');
+var themeleon = require('themeleon')().use('mustache');
 
 /**
  * Utility function we will use to merge a default configuration
@@ -44,19 +44,24 @@ var theme = themeleon(__dirname, function (t) {
   t.copy('assets');
 
   /**
-   * [optional] Any options you want to pass to the jade compilation.
-   *
-   * See <http://jade-lang.com/api>.
-   */
-  var options = {
-    pretty: true
-  };
-
-  /**
-   * Render `views/index.jade` with the theme's context (`ctx` below)
+   * Render `views/index.mustache` with the theme's context (`ctx` below)
    * as `index.html` in the destination directory.
    */
-  t.jade('views/index.jade', 'index.html', options);
+  t.mustache('views/index.mustache', 'index.html');
+
+  /**
+   * Or include a partials object
+   */
+  t.mustache('views/index.mustache', 'index.html', {
+    foo: 'views/foo.mustache',
+    'foo/bar': 'views/foo/bar.mustache',
+  });
+
+  /**
+   * Or let the mixin resolve all `.mustache` files in `views`
+   * Note: `.mustache` and `.mst` extensions are supported.
+   */
+  t.mustache('views/index.mustache', 'index.html', 'views');
 });
 
 /**

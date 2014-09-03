@@ -1,10 +1,10 @@
 /**
- * Themeleon template helper, using the Jade module.
+ * Themeleon template helper, using the Nunjucks module.
  *
  * See <https://github.com/themeleon/themeleon>.
- * See <https://github.com/themeleon/themeleon-jade>.
+ * See <https://github.com/themeleon/themeleon-nunjucks>.
  */
-var themeleon = require('themeleon')().use('jade');
+var themeleon = require('themeleon')().use('nunjucks');
 
 /**
  * Utility function we will use to merge a default configuration
@@ -44,19 +44,17 @@ var theme = themeleon(__dirname, function (t) {
   t.copy('assets');
 
   /**
-   * [optional] Any options you want to pass to the jade compilation.
+   * Configure Nunjucks views basePath and options.
    *
-   * See <http://jade-lang.com/api>.
+   * see <https://mozilla.github.io/nunjucks/api.html#configure>
    */
-  var options = {
-    pretty: true
-  };
+  t.nunjucks.configure('views', options);
 
   /**
-   * Render `views/index.jade` with the theme's context (`ctx` below)
+   * Render `views/index.nunjucks` with the theme's context (`ctx` below)
    * as `index.html` in the destination directory.
    */
-  t.jade('views/index.jade', 'index.html', options);
+  t.nunjucks('views/index.nunjucks', 'index.html');
 });
 
 /**

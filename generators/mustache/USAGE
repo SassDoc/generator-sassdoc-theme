@@ -1,0 +1,9 @@
+Description:
+  Creates a new Mustache view
+
+Example:
+  yo sassdoc-theme:mustache
+
+  This will create:
+    index.js
+    views/index.mustache

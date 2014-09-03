@@ -1,0 +1,9 @@
+Description:
+  Creates a new Nunjucks view
+
+Example:
+  yo sassdoc-theme:nunjucks
+
+  This will create:
+    index.js
+    views/index.nunjucks

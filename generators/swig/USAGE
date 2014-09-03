@@ -1,0 +1,9 @@
+Description:
+  Creates a new Swig view
+
+Example:
+  yo sassdoc-theme:swig
+
+  This will create:
+    index.js
+    views/index.swig

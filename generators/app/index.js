@@ -7,7 +7,6 @@ var yosay = require('yosay');
 var chalk = require('chalk');
 var isset = require('../../utils').isset;
 
-
 var Generator = module.exports = function Generator(args, options) {
   yeoman.generators.Base.apply(this, arguments);
 
@@ -24,7 +23,7 @@ var Generator = module.exports = function Generator(args, options) {
   // this.config.set('themePath', this.env.options.themePath);
 
   this.option('init', {
-    desc: 'Force to prompt question and re-initialize of .yo-rc.json',
+    desc: 'Force to prompt questions and re-initialize of .yo-rc.json',
     type: String,
     defaults: false
   });
@@ -67,18 +66,21 @@ Generator.prototype.askFor = function askFor() {
 
   var questions = [];
 
+  // Ask for the new theme name.
   (!this.config.get('themeName') || force) && questions.push({
     name: 'themeName',
     message: 'Theme name',
     default: this.themeName || path.basename(process.cwd())
   });
 
+  // Ask for the new theme description.
   (!this.config.get('themeDesc') || force) && questions.push({
     name: 'themeDesc',
     message: 'Theme description',
     default: this.themeDesc || this.config.get('themeDesc')
   });
 
+  // Ask for a specific theme package version.
   questions.push({
     name: 'version',
     message: 'Theme package version',
@@ -114,7 +116,7 @@ Generator.prototype.askFor = function askFor() {
   });
 
   // Ask for sassdoc-filter usage.
-  questions.push({
+  (!this.config.get('useFilter') || force) && questions.push({
     type: 'confirm',
     name: 'useFilter',
     message: 'Include and use sassdoc-filter',
@@ -122,7 +124,7 @@ Generator.prototype.askFor = function askFor() {
   });
 
   // Ask for sassdoc-indexer usage.
-  questions.push({
+  (!this.config.get('useIndexer') || force) && questions.push({
     type: 'confirm',
     name: 'useIndexer',
     message: 'Include and use sassdoc-indexer',
@@ -130,7 +132,7 @@ Generator.prototype.askFor = function askFor() {
   });
 
   // Ask for Sass usage.
-  questions.push({
+  (!this.config.get('useSass') || force) && questions.push({
     type: 'confirm',
     name: 'useSass',
     message: 'Use Sass for your theme stylesheets',
@@ -154,9 +156,9 @@ Generator.prototype.askFor = function askFor() {
     this.description   = answers.themeDesc || this.config.get('themeEngine');
     this.version       = answers.version;
     this.themeEngine   = answers.themeEngine || this.config.get('themeEngine');
-    this.useFilter     = answers.useFilter;
-    this.useIndexer    = answers.useIndexer;
-    this.useSass       = answers.useSass;
+    this.useFilter     = answers.useFilter || this.config.get('useFilter');
+    this.useIndexer    = answers.useIndexer || this.config.get('useIndexer');
+    this.useSass       = answers.useSass || this.config.get('useSass');
 
     this.useMustache   = enabled('mustache');
     this.useSwig       = enabled('swig');
@@ -164,7 +166,7 @@ Generator.prototype.askFor = function askFor() {
     this.useNunjucks   = enabled('nunjucks');
     this.useHandelbars = enabled('handelbars');
 
-    //save config to .yo-rc.json
+    // Save config to .yo-rc.json
     this.config.set(answers);
 
     done();
@@ -173,7 +175,16 @@ Generator.prototype.askFor = function askFor() {
 
 Generator.prototype.buildPackage = function packageFiles() {
   this.sourceRoot(path.join(__dirname, '../../templates/common'));
+
+  // Dotfiles.
+  this.template('_gitignore', '.gitignore');
+  this.template('_sassdocrc', '.sassdocrc');
+
+  // Package.
   this.template('_package.json', 'package.json');
+  this.template('_README.md', 'README.md');
+
+  // Assets.
   this.directory('assets');
   if (this.useSass) {
     this.directory('scss');
@@ -189,6 +200,7 @@ Generator.prototype.buildViews = function buildViews(done) {
     useIndexer: this.useIndexer
   };
 
+  // Call specified theme engine sub-generator.
   this.composeWith(generator, { options: options });
 };
 

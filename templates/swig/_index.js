@@ -1,10 +1,10 @@
 /**
- * Themeleon template helper, using the Jade module.
+ * Themeleon template helper, using the Swig module.
  *
  * See <https://github.com/themeleon/themeleon>.
- * See <https://github.com/themeleon/themeleon-jade>.
+ * See <https://github.com/themeleon/themeleon-swig>.
  */
-var themeleon = require('themeleon')().use('jade');
+var themeleon = require('themeleon')().use('swig');
 
 /**
  * Utility function we will use to merge a default configuration
@@ -44,19 +44,10 @@ var theme = themeleon(__dirname, function (t) {
   t.copy('assets');
 
   /**
-   * [optional] Any options you want to pass to the jade compilation.
-   *
-   * See <http://jade-lang.com/api>.
-   */
-  var options = {
-    pretty: true
-  };
-
-  /**
-   * Render `views/index.jade` with the theme's context (`ctx` below)
+   * Render `views/index.swig` with the theme's context (`ctx` below)
    * as `index.html` in the destination directory.
    */
-  t.jade('views/index.jade', 'index.html', options);
+  t.swig('views/index.swig', 'index.html');
 });
 
 /**
