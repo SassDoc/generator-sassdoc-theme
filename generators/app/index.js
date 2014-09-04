@@ -10,8 +10,11 @@ var isset = require('../../utils').isset;
 var Generator = module.exports = function Generator(args, options) {
   yeoman.generators.Base.apply(this, arguments);
 
-  this.argument('themeName', { type: String, required: false });
-  // this.themeName = this.themeName || path.basename(process.cwd());
+  this.argument('themeName', {
+    desc: 'Theme package name.',
+    type: String,
+    required: false
+  });
 
   // this.option('themePath', {
   //   desc: 'Path of theme directory',
@@ -33,14 +36,43 @@ var Generator = module.exports = function Generator(args, options) {
     type: 'String'
   });
 
+  // Validate the themeEngine option,
+  // fallback to prompts list.
+  this.options.themeEngine = (function () {
+    var engine = this.options.themeEngine;
+    if (!isset(engine)) {
+      return;
+    }
+
+    this.config.delete('themeEngine');
+
+    var allowed = this._.contains([
+      'mustache',
+      'jade',
+      'swig',
+      'nunjucks',
+      'handlebars',
+      'handelbars'],
+      engine.toLowerCase()
+    );
+
+    if (!allowed) {
+      this.log(chalk.red(
+        '>> Unsuported theme engine: "' + engine + '".' + '\n' +
+        '>> You will be given the choice below.'
+      ));
+    }
+
+    return allowed ? engine : undefined;
+  }.bind(this)());
+
+  // Save some defaults to .yo-rc.json base on args/options results.
   this.config.defaults({
     themeName: this.themeName,
-    themeDesc: 'A fancy new SassDoc theme.',
     author: {
       name: this.user.git.name() || process.env.user || process.env.username
     },
-    themeEngine: this.options.themeEngine,
-    useSass: true
+    themeEngine: this.options.themeEngine
   });
 
   this.pkg = require('../../package.json');
@@ -62,22 +94,25 @@ Generator.prototype.welcome = function welcome() {
 Generator.prototype.askFor = function askFor() {
   var done = this.async();
 
-  var force = (!this.config.existed || this.options.init) ? true : false;
+  var shouldPrompt = function (question) {
+    var force = (this.config.existed && this.options.init) ? true : false;
+    return (!isset(this.config.get(question)) || force);
+  }.bind(this);
 
   var questions = [];
 
   // Ask for the new theme name.
-  (!this.config.get('themeName') || force) && questions.push({
+  shouldPrompt('themeName') && questions.push({
     name: 'themeName',
-    message: 'Theme name',
-    default: this.themeName || path.basename(process.cwd())
+    message: 'Theme package name',
+    default: this.config.get('themeName') || path.basename(process.cwd())
   });
 
   // Ask for the new theme description.
-  (!this.config.get('themeDesc') || force) && questions.push({
+  shouldPrompt('themeDesc') && questions.push({
     name: 'themeDesc',
     message: 'Theme description',
-    default: this.themeDesc || this.config.get('themeDesc')
+    default: this.config.get('themeDesc') || 'A fancy new SassDoc theme.'
   });
 
   // Ask for a specific theme package version.
@@ -88,7 +123,7 @@ Generator.prototype.askFor = function askFor() {
   });
 
   // Ask for which theme engine to use.
-  (!this.config.get('themeEngine') || force) && questions.push({
+  shouldPrompt('themeEngine') && questions.push({
     type: 'list',
     name: 'themeEngine',
     message: 'Which theme engine would you like to use ?',
@@ -116,7 +151,7 @@ Generator.prototype.askFor = function askFor() {
   });
 
   // Ask for sassdoc-filter usage.
-  (!this.config.get('useFilter') || force) && questions.push({
+  shouldPrompt('useFilter') && questions.push({
     type: 'confirm',
     name: 'useFilter',
     message: 'Include and use sassdoc-filter',
@@ -124,7 +159,7 @@ Generator.prototype.askFor = function askFor() {
   });
 
   // Ask for sassdoc-indexer usage.
-  (!this.config.get('useIndexer') || force) && questions.push({
+  shouldPrompt('useIndexer') && questions.push({
     type: 'confirm',
     name: 'useIndexer',
     message: 'Include and use sassdoc-indexer',
@@ -132,7 +167,7 @@ Generator.prototype.askFor = function askFor() {
   });
 
   // Ask for Sass usage.
-  (!this.config.get('useSass') || force) && questions.push({
+  shouldPrompt('useSass') && questions.push({
     type: 'confirm',
     name: 'useSass',
     message: 'Use Sass for your theme stylesheets',
@@ -152,8 +187,9 @@ Generator.prototype.askFor = function askFor() {
       return this.themeEngine === engine;
     }.bind(this);
 
-    this.slugname      = this._.slugify(answers.themeName || this.config.get('themeName'));
-    this.description   = answers.themeDesc || this.config.get('themeEngine');
+    this.themeName     = this.themeName || answers.themeName || this.config.get('themeName');
+    this.slugname      = this._.slugify(this.themeName);
+    this.description   = answers.themeDesc || this.config.get('themeDesc');
     this.version       = answers.version;
     this.themeEngine   = answers.themeEngine || this.config.get('themeEngine');
     this.useFilter     = answers.useFilter || this.config.get('useFilter');
@@ -167,6 +203,7 @@ Generator.prototype.askFor = function askFor() {
     this.usehandlebars = enabled('handlebars');
 
     // Save config to .yo-rc.json
+    this.config.set('themeName', this.themeName);
     this.config.set(answers);
 
     done();
