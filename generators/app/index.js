@@ -138,7 +138,7 @@ Generator.prototype.askFor = function askFor() {
       value: 'nunjucks',
       checked: false
     }, {
-      name: 'handlebars',
+      name: 'Handlebars',
       value: 'handlebars',
       checked: false
     }]
