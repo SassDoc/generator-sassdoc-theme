@@ -62,7 +62,7 @@ var theme = themeleon(__dirname, function (t) {
  * (that will be handled by Themeleon), and the context variables `ctx`.
  *
  * Here, we will modify the context to have a `view` key defaulting to
- * the contents of `.sassdocrc`, but that can be overriden by the user's
+ * a literal object, but that can be overriden by the user's
  * configuration.
  */
 module.exports = function (dest, ctx) {
@@ -70,8 +70,18 @@ module.exports = function (dest, ctx) {
     ctx.view = {};
   }
 
-  // Extend default `.sassdocrc` with `ctx.view` object
-  ctx.view = extend(require('./.sassdocrc'), ctx.view);<% if (useFilter) { %>
+  // Extend default config with `ctx.view` object
+  ctx.view = extend({
+    display: {
+      access: ['public', 'private'],
+      alias: false,
+      watermark: true
+    },
+    groups: {
+      'undefined': 'General'
+    },
+    'shortcutIcon': 'http://sass-lang.com/favicon.ico'
+  }, ctx.view);<% if (useFilter) { %>
 
   /**
    * Parse text data (like descriptions) as Markdown, and put the
