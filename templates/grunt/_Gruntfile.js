@@ -9,7 +9,7 @@ var sassdoc = require('sassdoc');
 
 var copy = q.denodeify(fse.copy);
 
-// Set Sass your project path.
+// Set your Sass project (the one you're generating docs for) path.
 // Relative to this Gruntfile.
 var projectPath = '../';
 
@@ -54,6 +54,10 @@ var config = {
     scss: {
       files: ['<%%= dirs.scss %>/**/*.scss'],
       tasks: ['sass:develop', 'autoprefixer:develop', 'dumpCSS']
+    },<% } else { %>
+    css: {
+      files: ['<%= dirs.css %>/**/*.css'],
+      tasks: ['dumpCSS']
     },<% } %>
     js: {
       files: ['<%%= dirs.js %>/**/*.js'],
@@ -111,9 +115,9 @@ var config = {
   compile: {
     options: {
       verbose: true,
+      theme: '.',
       // basePath: '',
-      package: project('package.json'),
-      theme: '<%= slugname %>',
+      // package: project('package.json'),
       // groups: {
       //   'undefined': 'General'
       // }

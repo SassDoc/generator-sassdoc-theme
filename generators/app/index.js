@@ -50,7 +50,7 @@ var Generator = module.exports = function Generator(args, options) {
       'swig',
       'nunjucks',
       'handlebars',
-      'handelbars' // (ಠ‿ಠ)
+      'handelbars'
       ], themeEngine.toLowerCase()
     );
 
