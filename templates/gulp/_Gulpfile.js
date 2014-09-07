@@ -13,10 +13,10 @@ var reload = browserSync.reload;
 var path = require('path');
 var fs = require('fs');
 var fse = require('fs-extra');
-var q = require('q');
+var Q = require('q');
 var sassdoc = require('sassdoc');
 
-var copy = q.denodeify(fse.copy);
+var copy = Q.denodeify(fse.copy);
 
 // Set your Sass project (the one you're generating docs for) path.
 // Relative to this Gruntfile.
@@ -64,7 +64,12 @@ gulp.task('browser-sync', function () {
   browserSync({
     server: {
       baseDir: dirs.docs
-    }
+    },
+    files: [
+      dirs.docs + '/*.html',
+      dirs.docs + '/assets/css/**/*.css',
+      dirs.docs + '/assets/js/**/*.js'
+    ]
   });
 });
 
@@ -87,8 +92,7 @@ gulp.task('compile', function () {
   // Enable verbose.
   sassdoc.logger.enabled = config['verbose'];
 
-  return sassdoc
-    .documentize(src, dest, config);
+  return sassdoc.documentize(src, dest, config);
 });
 
 
@@ -119,8 +123,8 @@ gulp.task('dumpCSS', ['styles'], function () {
 
 
 gulp.task('develop', ['compile', 'styles', 'browser-sync'], function () {<% if (useSass) { %>
-  gulp.watch('scss/**/*.scss', ['styles', 'dumpCSS', reload]);<% } else { %>
-  gulp.watch('assets/css/**/*.css', ['styles', 'dumpCSS', reload]);<% }%>
-  gulp.watch('assets/js/**/*.js', ['dumpJS'], reload);
-  gulp.watch('views/**/*.swig', ['compile'], reload);
+  gulp.watch('scss/**/*.scss', ['styles', 'dumpCSS']);<% } else { %>
+  gulp.watch('assets/css/**/*.css', ['styles', 'dumpCSS']);<% }%>
+  gulp.watch('assets/js/**/*.js', ['dumpJS']);
+  gulp.watch('views/**/*.swig', ['compile']);
 });
