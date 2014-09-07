@@ -29,7 +29,6 @@ Generator.prototype.install = function install() {
   var pkgs = {
     dependencies: [],
     devDependencies: [
-      'chalk',
       'fs-extra',
       'q',
       'sassdoc',
@@ -38,6 +37,7 @@ Generator.prototype.install = function install() {
       'gulp-autoprefixer',
       'gulp-uglify',
       'gulp-rename',
+      'gulp-util',
       'browser-sync'
     ]
   };
