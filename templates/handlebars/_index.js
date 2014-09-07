@@ -52,16 +52,16 @@ var theme = themeleon(__dirname, function (t) {
   /**
    * Or include a partials object
    */
-  t.handlebars('views/index.handlebars', 'index.html', {
-    foo: 'views/foo.handlebars',
-    'foo/bar': 'views/foo/bar.handlebars',
-  });
+  //t.handlebars('views/index.handlebars', 'index.html', {
+  //  foo: 'views/foo.handlebars',
+  //  'foo/bar': 'views/foo/bar.handlebars',
+  //});
 
   /**
    * Or let the mixin resolve all `.handlebars` files in `views`
    * Note: `.handlebars` and `.hbs` extensions are supported.
    */
-  t.handlebars('views/index.handlebars', 'index.html', 'views');
+  //t.handlebars('views/index.handlebars', 'index.html', 'views');
 });
 
 /**
