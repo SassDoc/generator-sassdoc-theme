@@ -48,7 +48,7 @@ var theme = themeleon(__dirname, function (t) {
    *
    * see <https://mozilla.github.io/nunjucks/api.html#configure>
    */
-  t.nunjucks.configure('views', options);
+  //t.nunjucks.configure('views', options);
 
   /**
    * Render `views/index.nunjucks` with the theme's context (`ctx` below)
