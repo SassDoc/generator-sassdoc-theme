@@ -1,0 +1,64 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="utf-8")
+    title Your SassDoc Theme
+    link(rel="stylesheet", href="assets/css/main.css")
+
+    //- Feel free to add more meta or stylesheets. It's up to you.
+
+  body
+    //-
+       You can access any variable you set in your configuration file from the `view` object.
+       Basically your configuration file is passed to the view as the `view` object.
+
+    = view.test_variable
+
+    //-
+       Data comes with a `byGroupAndType` key which contains the data tree
+       with groups as first level (default group is named `undefined`),
+       types as second level (`function`, `variable` or `mixin`), items as third level.
+       So: `groups > types > items`.
+
+           data.byGroupAndType = {
+               'undefined': {
+                   'function': [ ... ],
+                   'mixin': [ ... ],
+                   'variable': [ ... ]
+               }
+           }
+
+       For extra informations about the `data` interface, be sure to have a look at the wiki:
+       https://github.com/SassDoc/sassdoc/wiki/SassDoc-Data-Interface
+
+    //-
+       To display our items, we need to:
+       1. Loop over `data.byGroupAndType` groups
+       2. Loop over types mapped to each group
+       3. Loop over items mapped to each type
+
+    //- 1. Loop over the groups in `data.byGroupAndType`
+    each group, group_name in data.byGroupAndType
+      section
+        //- Retrieve group alias if any (else group name)
+        h1= group_name
+
+        //- 2. Loop over the types in the current group
+        each items, type in group
+
+          //- If items to be displayed in type
+          if items.length > 0
+            section
+              h2= type
+
+              //- 3. Loop over the items in the current type
+              each item in items
+
+                //- At this point it is up to you to display whatever you want from your items.
+                h3= item.context.name
+
+    //-
+       If your theme needs some JavaScript, feel free to create a JS file in `assets/js/` folder
+       and include it as follow:
+
+           script(src="assets/js/main.js")
