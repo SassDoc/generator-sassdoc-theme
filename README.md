@@ -39,7 +39,7 @@ yo sassdoc-theme [options] [<themeName>]
 * `--themeEngine=[engine]`
 
   Template engine
-  Defaults to `mustache`.  
+  Defaults to `swig`.
   [Themeleon supported engines](https://github.com/themeleon/themeleon/blob/master/README.md#template-engines)
   :`jade`, `swig`, `nunjucks`, `handlebars`
 

@@ -47,7 +47,6 @@ var Generator = module.exports = function Generator(args, options) {
     this.config.delete('themeEngine');
 
     var allowed = this._.contains([
-      'mustache',
       'jade',
       'swig',
       'nunjucks',
@@ -128,10 +127,6 @@ Generator.prototype.askFor = function askFor() {
     name: 'themeEngine',
     message: 'Which theme engine would you like to use ?',
     choices: [{
-      name: 'Mustache',
-      value: 'mustache',
-      checked: false
-    }, {
       name: 'Swig',
       value: 'swig',
       checked: false
@@ -196,7 +191,6 @@ Generator.prototype.askFor = function askFor() {
     this.useIndexer    = answers.useIndexer || this.config.get('useIndexer');
     this.useSass       = answers.useSass || this.config.get('useSass');
 
-    this.useMustache   = enabled('mustache');
     this.useSwig       = enabled('swig');
     this.useJade       = enabled('jade');
     this.useNunjucks   = enabled('nunjucks');
