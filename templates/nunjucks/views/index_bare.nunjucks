@@ -38,6 +38,8 @@
           {# At this point it is up to you to display whatever you want from your items. #}
           <h3>{{ item.context.name }}</h3>
 
+          <p>This item belongs to group {{ item.group[0][0] }}.</p>
+
           {% endfor %}
       </section>
       {% endif %}
