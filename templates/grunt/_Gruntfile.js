@@ -123,7 +123,7 @@ var config = {
       // }
     },
     develop: {
-      src: '<%%= dirs.scss %>',
+      src: '<%%= dirs.src %>',
       dest: '<%%= dirs.docs %>',
     }
   }
