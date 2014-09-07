@@ -19,20 +19,6 @@
     {{ view.test_variable }}
 
     {##
-     # Groups usually have quite unfriendly names, hence `undefined`. Fortunately, they can be aliased
-     # from the configuration file of the theme. Then, SassDoc processes it to generate a `groups` object.
-     # In this object, each group name is mapped to either an alias if specified in the configuration file
-     # or the same group name. For instance:
-     #
-        groups = {
-            'undefined': 'My Awesome Default Group'
-        }
-     #
-     # To retrieve the alias of a group, use `groups[group_name]`. In this case, `groups['undefined']` will
-     # return `My Awesome Default Group`.
-     #}
-
-    {##
      # To display our items, we need to:
      # 1. Loop over `data` types
      # 2. Loop over items mapped to each type
