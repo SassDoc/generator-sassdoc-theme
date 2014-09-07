@@ -6,8 +6,8 @@
     "sassdoctheme"
   ],
   "dependencies": {<% if (useFilter) { %>
-    "sassdoc-filter": "1.*",<% } %><% if (useIndexer) { %>
-    "sassdoc-indexer": "1.*",<% } %>
+    "sassdoc-filter": "^1.0.0",<% } %><% if (useIndexer) { %>
+    "sassdoc-indexer": "^1.0.0",<% } %>
     "extend": "^1.0.0",
     "themeleon": "^1.0.0"
   },
