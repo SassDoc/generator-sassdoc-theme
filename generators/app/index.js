@@ -38,9 +38,8 @@ var Generator = module.exports = function Generator(args, options) {
 
   // Validate the themeEngine option,
   // fallback to prompts list.
-  this.options.themeEngine = (function () {
-    var engine = this.options.themeEngine;
-    if (!isset(engine)) {
+  this.options.themeEngine = (function (themeEngine) {
+    if (!isset(themeEngine)) {
       return;
     }
 
@@ -51,30 +50,30 @@ var Generator = module.exports = function Generator(args, options) {
       'swig',
       'nunjucks',
       'handlebars',
-      'handelbars'],
-      engine.toLowerCase()
+      'handelbars' // (ಠ‿ಠ)
+      ], themeEngine.toLowerCase()
     );
 
     if (!allowed) {
       this.log(chalk.red(
-        '>> Unsuported theme engine: "' + engine + '".' + '\n' +
+        '>> Unsuported theme engine: "' + themeEngine + '".' + '\n' +
         '>> You will be given the choice below.'
       ));
     }
 
-    return allowed ? engine : undefined;
-  }.bind(this)());
+    return allowed ? themeEngine : undefined;
+  }.bind(this)(this.options.themeEngine));
 
   // Save some defaults to .yo-rc.json base on args/options results.
   this.config.defaults({
     themeName: this.themeName,
+    themeEngine: this.options.themeEngine,
     author: {
       name: this.user.git.name() || process.env.user || process.env.username
-    },
-    themeEngine: this.options.themeEngine
+    }
   });
 
-  this.pkg = require('../../package.json');
+  // this.pkg = require('../../package.json');
 };
 
 util.inherits(Generator, yeoman.generators.Base);
@@ -125,7 +124,7 @@ Generator.prototype.askFor = function askFor() {
   shouldPrompt('themeEngine') && questions.push({
     type: 'list',
     name: 'themeEngine',
-    message: 'Which theme engine would you like to use ?',
+    message: 'Which theme engine would you like to use',
     choices: [{
       name: 'Swig',
       value: 'swig',
@@ -177,24 +176,56 @@ Generator.prototype.askFor = function askFor() {
     default: true
   });
 
+  // Ask for task runner/build tool usage.
+  shouldPrompt('useTaskRunner') && questions.push({
+    type: 'confirm',
+    name: 'useTaskRunner',
+    message: 'Use a task runner or build tool [Grunt|Gulp] for managing your theme',
+    default: true
+  }, {
+    when: function (answers) {
+      return isset(answers) && isset(answers.useTaskRunner) && answers.useTaskRunner;
+    },
+    type: 'list',
+    name: 'useTaskRunner',
+    message: 'Which one would you like to use',
+    choices: [{
+      name: 'Grunt',
+      value: 'grunt',
+      checked: true
+    }, {
+      name: 'Gulp',
+      value: 'gulp',
+      checked: false
+    }]
+  });
+
   this.prompt(questions, function (answers) {
-    var enabled = function (engine) {
+    var isEnabled = function (engine) {
       return this.themeEngine === engine;
     }.bind(this);
 
-    this.themeName     = this.themeName || answers.themeName || this.config.get('themeName');
-    this.slugname      = this._.slugify(this.themeName);
-    this.description   = answers.themeDesc || this.config.get('themeDesc');
-    this.version       = answers.version;
-    this.themeEngine   = answers.themeEngine || this.config.get('themeEngine');
-    this.useFilter     = answers.useFilter || this.config.get('useFilter');
-    this.useIndexer    = answers.useIndexer || this.config.get('useIndexer');
-    this.useSass       = answers.useSass || this.config.get('useSass');
+    var isAnswered = function (question) {
+      return isset(answers[question]) ? answers[question] : this.config.get(question);
+    }.bind(this);
 
-    this.useSwig       = enabled('swig');
-    this.useJade       = enabled('jade');
-    this.useNunjucks   = enabled('nunjucks');
-    this.usehandlebars = enabled('handlebars');
+    this.themeName = this.themeName || answers.themeName || this.config.get('themeName');
+    this.slugname = this._.slugify(this.themeName);
+    this.description = answers.themeDesc || this.config.get('themeDesc');
+    this.version = answers.version;
+    this.themeEngine = answers.themeEngine || this.config.get('themeEngine');
+    this.useFilter = isAnswered('useFilter');
+    this.useIndexer = isAnswered('useIndexer');
+    this.useSass = isAnswered('useSass')
+
+    this.useSwig = isEnabled('swig');
+    this.useJade = isEnabled('jade');
+    this.useNunjucks = isEnabled('nunjucks');
+    this.usehandlebars = isEnabled('handlebars');
+
+    this.useTaskRunner = (answers.useTaskRunner || this.config.get('useTaskRunner'));
+    this.useGrunt = this.useTaskRunner === 'grunt' || false;
+    this.useGulp = this.useTaskRunner === 'gulp' || false;
 
     // Save config to .yo-rc.json
     this.config.set('themeName', this.themeName);
@@ -222,7 +253,7 @@ Generator.prototype.buildPackage = function packageFiles() {
   }
 };
 
-Generator.prototype.buildViews = function buildViews(done) {
+Generator.prototype.buildViews = function buildViews() {
   var generator = 'sassdoc-theme:' + (this.themeEngine).toLowerCase();
   var options = {
     'skip-message': this.options['skip-install-message'],
@@ -232,6 +263,23 @@ Generator.prototype.buildViews = function buildViews(done) {
   };
 
   // Call specified theme engine sub-generator.
+  this.composeWith(generator, { options: options });
+};
+
+Generator.prototype.buildTaskRunner = function buildTaskRunner() {
+  if (!this.useTaskRunner) {
+    return;
+  }
+
+  var generator = 'sassdoc-theme:' + (this.useTaskRunner).toLowerCase();
+  var options = {
+    'skip-message': this.options['skip-install-message'],
+    'skip-install': this.options['skip-install'],
+    slugname: this.slugname,
+    useSass: this.useSass
+  };
+
+  // Call specified task runner sub-generator.
   this.composeWith(generator, { options: options });
 };
 

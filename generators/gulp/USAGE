@@ -1,0 +1,8 @@
+Description:
+  Creates a new Gulpfile and install dev-dependencies
+
+Example:
+  yo sassdoc-theme:gulp
+
+  This will create:
+    Gulpfile.js

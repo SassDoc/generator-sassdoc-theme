@@ -1,0 +1,8 @@
+Description:
+  Creates a new Gruntfile and install dev-dependencies
+
+Example:
+  yo sassdoc-theme:grunt
+
+  This will create:
+    Gruntfile.js
