@@ -1,10 +1,17 @@
 /**
+ * Load our own swig instance.
+ * Disabling cache is going to be required when watching files.
+ */
+var swig = require('swig');
+swig.setDefaults({ cache: false });
+
+/**
  * Themeleon template helper, using the Swig module.
  *
  * See <https://github.com/themeleon/themeleon>.
  * See <https://github.com/themeleon/themeleon-swig>.
  */
-var themeleon = require('themeleon')().use('swig');
+var themeleon = require('themeleon')().use('swig', swig);
 
 /**
  * Utility function we will use to merge a default configuration
