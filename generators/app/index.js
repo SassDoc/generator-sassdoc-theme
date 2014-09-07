@@ -240,7 +240,6 @@ Generator.prototype.buildPackage = function packageFiles() {
 
   // Dotfiles.
   this.template('_gitignore', '.gitignore');
-  this.template('_sassdocrc', '.sassdocrc');
 
   // Package.
   this.template('_package.json', 'package.json');
