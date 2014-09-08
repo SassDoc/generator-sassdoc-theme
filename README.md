@@ -27,25 +27,20 @@ yo sassdoc-theme [options] [<themeName>]
 
   Force to prompt question and re-initialize .yo-rc.json.
 
-* `--themePath`
-
-  Generate scaffold into a custom directory.
-
 * `--skip-install`
 
   Skips the automatic execution of `bower` and `npm` after
   scaffolding has finished.
 
-* `--themeEngine=[engine]`
+* `--theme-engine=[engine]`
 
   Template engine
-  Defaults to `swig`.
-  [Themeleon supported engines](https://github.com/themeleon/themeleon/blob/master/README.md#template-engines)
-  :`jade`, `swig`, `nunjucks`, `handlebars`
+  Defaults to `swig`.  
+  Supported engines: `jade`, `swig`, `nunjucks`, `handlebars`
 
 ## Documentation
 
-[SassDoc] theme documentation:
+SassDoc theme documentation:
 
 * [Using Your Own Theme](https://github.com/SassDoc/sassdoc/wiki/Using-Your-Own-Theme)
 * [Theme Context](https://github.com/SassDoc/sassdoc/wiki/Theme-Context)

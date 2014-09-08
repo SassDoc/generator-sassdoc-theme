@@ -16,14 +16,11 @@ var Generator = module.exports = function Generator(args, options) {
     required: false
   });
 
-  // this.option('themePath', {
+  // this.option('theme-path', {
   //   desc: 'Path of theme directory',
   //   type: 'String',
   //   defaults: 'theme'
   // });
-  //
-  // this.env.options.themePath = this.options.themePath;
-  // this.config.set('themePath', this.env.options.themePath);
 
   this.option('init', {
     desc: 'Force to prompt questions and re-initialize of .yo-rc.json',
@@ -31,14 +28,14 @@ var Generator = module.exports = function Generator(args, options) {
     defaults: false
   });
 
-  this.option('themeEngine', {
+  this.option('theme-engine', {
     desc: 'Theme template engine.',
     type: 'String'
   });
 
-  // Validate the themeEngine option,
+  // Validate the theme-engine option,
   // fallback to prompts list.
-  this.options.themeEngine = (function (themeEngine) {
+  this.themeEngine = (function (themeEngine) {
     if (!isset(themeEngine)) {
       return;
     }
@@ -62,12 +59,12 @@ var Generator = module.exports = function Generator(args, options) {
     }
 
     return allowed ? themeEngine : undefined;
-  }.bind(this)(this.options.themeEngine));
+  }.bind(this)(this.options['theme-engine']));
 
   // Save some defaults to .yo-rc.json base on args/options results.
   this.config.defaults({
     themeName: this.themeName,
-    themeEngine: this.options.themeEngine,
+    themeEngine: this.themeEngine,
     author: {
       name: this.user.git.name() || process.env.user || process.env.username
     }
