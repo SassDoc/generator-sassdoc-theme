@@ -19,7 +19,7 @@ var sassdoc = require('sassdoc');
 var copy = Q.denodeify(fse.copy);
 
 // Set your Sass project (the one you're generating docs for) path.
-// Relative to this Gruntfile.
+// Relative to this Gulpfile.
 var projectPath = '../';
 
 // Project path helper.
@@ -29,7 +29,7 @@ var project = function () {
   return path.resolve.apply(path, args);
 };
 
-// Project specific paths.
+// Theme and project specific paths.
 var dirs = {<% if (useSass) { %>
   scss: 'scss',<% } %>
   css: 'assets/css',
@@ -55,7 +55,9 @@ gulp.task('styles', function () {<% if (useSass) { %>
 gulp.task('compress', function () {
   return gulp.src('assets/js/*.js')
     .pipe(uglify())
-    .pipe(rename('assets/js/*.min.js')) // untested
+    .pipe(rename(function (path) {
+      path.extname = '.min.js';
+    }))
     .pipe(gulp.dest('assets/js'));
 });
 
@@ -126,5 +128,5 @@ gulp.task('develop', ['compile', 'styles', 'browser-sync'], function () {<% if (
   gulp.watch('scss/**/*.scss', ['styles', 'dumpCSS']);<% } else { %>
   gulp.watch('assets/css/**/*.css', ['styles', 'dumpCSS']);<% }%>
   gulp.watch('assets/js/**/*.js', ['dumpJS']);
-  gulp.watch('views/**/*.swig', ['compile']);
+  gulp.watch('views/**/*<%= tplExtensions %>', ['compile']);
 });

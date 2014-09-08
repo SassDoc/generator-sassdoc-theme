@@ -64,7 +64,7 @@ var config = {
       tasks: ['dumpJS']
     },
     tpl: {
-      files: ['<%%= dirs.tpl %>/**/*.swig'],
+      files: ['<%%= dirs.tpl %>/**/*<%= tplExtensions %>'],
       tasks: ['compile:develop']
     }
   },

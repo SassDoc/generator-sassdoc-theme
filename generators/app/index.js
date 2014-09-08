@@ -258,8 +258,10 @@ Generator.prototype.buildViews = function buildViews() {
     useIndexer: this.useIndexer
   };
 
-  // Call specified theme engine sub-generator.
-  this.composeWith(generator, { options: options });
+  this.on('install', function () {
+    // Call specified task runner sub-generator.
+    this.composeWith(generator, { options: options });
+  });
 };
 
 Generator.prototype.buildTaskRunner = function buildTaskRunner() {
@@ -272,11 +274,14 @@ Generator.prototype.buildTaskRunner = function buildTaskRunner() {
     'skip-message': this.options['skip-install-message'],
     'skip-install': this.options['skip-install'],
     slugname: this.slugname,
+    themeEngine: this.themeEngine,
     useSass: this.useSass
   };
 
-  // Call specified task runner sub-generator.
-  this.composeWith(generator, { options: options });
+  this.on('install', function () {
+    // Call specified task runner sub-generator.
+    this.composeWith(generator, { options: options });
+  });
 };
 
 Generator.prototype.install = function () {

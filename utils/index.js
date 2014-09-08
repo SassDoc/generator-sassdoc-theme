@@ -9,6 +9,15 @@ module.exports = {
    */
   isset: function (value) {
     return typeof value !== 'undefined';
+  },
+
+  /**
+   * Capitalize a string
+   * @param {String} str - string to be capitalized
+   * @return {String}
+   */
+  capitalize: function (str) {
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
   }
 
 };
