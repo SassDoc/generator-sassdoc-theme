@@ -53,8 +53,10 @@
     "npm": ">=1.2.10"
   },
   "scripts": {
+    "clean": "rm -rf test/.tmp",
+    "lint": "eslint generators/**/*.js lib/*.js utils/*.js test/*.js",
     "test": "mocha --reporter spec",
-    "pretest": "rm -rf test/.tmp",
-    "posttest": "$npm_package_scripts_pretest"
+    "pretest": "$npm_package_scripts_lint & $npm_package_scripts_cleab",
+    "posttest": "$npm_package_scripts_clean"
   }
 }

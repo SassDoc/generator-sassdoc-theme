@@ -4,7 +4,7 @@ var util = require('util');
 var TaskRunner = require('../../lib/taskrunner-base');
 
 
-var Generator = module.exports = function Generator(args, options) {
+var Generator = module.exports = function Generator() {
   TaskRunner.apply(this, arguments);
 };
 
@@ -31,4 +31,4 @@ Generator.prototype.gulp = function gulp() {
 
   this.buildTasksFile();
   this.installDependencies();
-}
+};

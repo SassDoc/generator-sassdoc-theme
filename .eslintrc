@@ -3,11 +3,13 @@
     "browser": false,
     "node": true,
     "amd": false,
-    "mocha": false
+    "mocha": true
   },
 
   "rules": {
     "no-global-strict": 0,
-    "quotes": "single"
+    "quotes": "single",
+    "consistent-return": 0,
+    "no-unused-expressions": 0
   }
 }

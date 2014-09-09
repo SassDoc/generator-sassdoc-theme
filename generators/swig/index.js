@@ -6,7 +6,7 @@ var yeoman = require('yeoman-generator');
 var isset = require('../../utils').isset;
 
 
-var Generator = module.exports = function Generator(args, options) {
+var Generator = module.exports = function Generator() {
   yeoman.generators.Base.apply(this, arguments);
 
   this.useFilter = isset(this.options.useFilter) ? this.options.useFilter : true;
@@ -32,7 +32,7 @@ Generator.prototype.buildViews = function createViewFiles() {
   this.mkdir('views');
   this.copy(path.join('views', index), 'views/index.swig');
   this.template('_index.js', 'index.js');
-}
+};
 
 Generator.prototype.install = function install() {
   if (this.options['skip-install']) {

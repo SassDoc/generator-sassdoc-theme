@@ -7,7 +7,7 @@ var yosay = require('yosay');
 var chalk = require('chalk');
 var isset = require('../../utils').isset;
 
-var Generator = module.exports = function Generator(args, options) {
+var Generator = module.exports = function Generator() {
   yeoman.generators.Base.apply(this, arguments);
 
   this.argument('themeName', {
@@ -211,7 +211,7 @@ Generator.prototype.askFor = function askFor() {
     this.themeEngine = answers.themeEngine || this.config.get('themeEngine');
     this.useFilter = isAnswered('useFilter');
     this.useIndexer = isAnswered('useIndexer');
-    this.useSass = isAnswered('useSass')
+    this.useSass = isAnswered('useSass');
 
     this.useSwig = isEnabled('swig');
     this.useJade = isEnabled('jade');

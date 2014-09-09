@@ -53,7 +53,7 @@ describe('SassDoc theme generator', function () {
       useIndexer: false,
       useSass: false,
       useTaskRunner: false
-    }
+    };
 
     var deps = generators.map(function (gen) {
       return '../' + gen;
@@ -85,7 +85,7 @@ describe('SassDoc theme generator', function () {
             'Gruntfile.js',
             'Gulpfile.js',
             'views',
-            'scss/main.scss',
+            'scss/main.scss'
           ]);
           done();
         });
