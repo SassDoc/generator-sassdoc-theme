@@ -20,8 +20,8 @@ describe('SassDoc theme generator', function () {
 
   it('the generators can be required without throwing', function () {
     generators.forEach(function (gen) {
-      var test = require(gen);
-    });
+      this.requireTest = require(gen);
+    }.bind(this));
   });
 
   describe('run test', function () {
