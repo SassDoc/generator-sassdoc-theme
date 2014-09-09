@@ -15,12 +15,12 @@
   },
   "contributors": [
     {
-      "name": "Fabrice Weinberg",
-      "url": "https://twitter.com/fweinb"
-    },
-    {
       "name": "Valérian Galliat",
       "url": "https://twitter.com/valeriangalliat"
+    },
+    {
+      "name": "Fabrice Weinberg",
+      "url": "https://twitter.com/fweinb"
     },
     {
       "name": "Hugo Giraudel",
@@ -57,7 +57,7 @@
     "clean": "rm -rf test/.tmp",
     "lint": "eslint generators/**/*.js lib/*.js utils/*.js test/*.js",
     "test": "mocha --reporter spec",
-    "pretest": "$npm_package_scripts_lint & $npm_package_scripts_cleab",
+    "pretest": "$npm_package_scripts_lint & $npm_package_scripts_clean",
     "posttest": "$npm_package_scripts_clean"
   }
 }
