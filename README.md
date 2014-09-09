@@ -1,4 +1,4 @@
-# generator-sassdoc-theme
+# generator-sassdoc-theme ![npm version](http://img.shields.io/npm/v/generator-sassdoc-theme.svg?style=flat)](https://www.npmjs.org/package/generator-sassdoc-theme) [![Build Status: Linux](http://img.shields.io/travis/SassDoc/generator-sassdoc-theme.svg?style=flat)](https://travis-ci.org/SassDoc/generator-sassdoc-theme?branch=master)
 
 > [Yeoman] generator that scaffolds out a [SassDoc] theme.
 
