@@ -42,7 +42,9 @@
     "yeoman-generator": "^0.17.3",
     "yosay": "^1.0.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "mocha": "^1.21.4"
+  },
   "peerDependencies": {
     "yo": ">=1.2.0"
   },
@@ -51,6 +53,8 @@
     "npm": ">=1.2.10"
   },
   "scripts": {
-    "test": ""
+    "test": "mocha --reporter spec",
+    "pretest": "rm -rf test/.tmp",
+    "posttest": "$npm_package_scripts_pretest"
   }
 }
