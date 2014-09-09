@@ -1,6 +1,5 @@
 .npmignore
 .editorconfig
-.gitattributes
 .eslintrc
 .travis.yml
 test
