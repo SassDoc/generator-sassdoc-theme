@@ -76,14 +76,16 @@ var Generator = module.exports = function Generator(args, options) {
 util.inherits(Generator, yeoman.generators.Base);
 
 Generator.prototype.welcome = function welcome() {
-  if (!this.options['skip-welcome-message']) {
-    this.log(yosay(
-      'SassDoc theme generator'
-    ));
-    this.log(chalk.magenta(
-      'Scafold out a new theme with your prefered template engine.' + '\n'
-    ));
+  if (this.options['skip-welcome-message']) {
+    return;
   }
+
+  this.log(yosay(
+    'SassDoc theme generator'
+  ));
+  this.log(chalk.magenta(
+    'Scafold out a new theme with your prefered template engine.' + '\n'
+  ));
 };
 
 Generator.prototype.askFor = function askFor() {
@@ -124,20 +126,16 @@ Generator.prototype.askFor = function askFor() {
     message: 'Which theme engine would you like to use',
     choices: [{
       name: 'Swig',
-      value: 'swig',
-      checked: false
+      value: 'swig'
     },{
       name: 'Jade',
-      value: 'jade',
-      checked: false
+      value: 'jade'
     }, {
       name: 'Nunjucks',
-      value: 'nunjucks',
-      checked: false
+      value: 'nunjucks'
     }, {
       name: 'Handlebars',
-      value: 'handlebars',
-      checked: false
+      value: 'handlebars'
     }]
   });
 
@@ -220,7 +218,7 @@ Generator.prototype.askFor = function askFor() {
     this.useNunjucks = isEnabled('nunjucks');
     this.usehandlebars = isEnabled('handlebars');
 
-    this.useTaskRunner = (answers.useTaskRunner || this.config.get('useTaskRunner'));
+    this.useTaskRunner = answers.useTaskRunner || this.config.get('useTaskRunner');
     this.useGrunt = this.useTaskRunner === 'grunt' || false;
     this.useGulp = this.useTaskRunner === 'gulp' || false;
 
@@ -250,7 +248,11 @@ Generator.prototype.buildPackage = function packageFiles() {
 };
 
 Generator.prototype.buildViews = function buildViews() {
-  var generator = 'sassdoc-theme:' + (this.themeEngine).toLowerCase();
+  if (!this.themeEngine) {
+    return;
+  }
+
+  var generator = 'sassdoc-theme:' + this.themeEngine.toLowerCase();
   var options = {
     'skip-message': this.options['skip-install-message'],
     'skip-install': this.options['skip-install'],
@@ -269,7 +271,7 @@ Generator.prototype.buildTaskRunner = function buildTaskRunner() {
     return;
   }
 
-  var generator = 'sassdoc-theme:' + (this.useTaskRunner).toLowerCase();
+  var generator = 'sassdoc-theme:' + this.useTaskRunner.toLowerCase();
   var options = {
     'skip-message': this.options['skip-install-message'],
     'skip-install': this.options['skip-install'],

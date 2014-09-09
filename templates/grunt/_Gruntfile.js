@@ -56,7 +56,7 @@ var config = {
       tasks: ['sass:develop', 'autoprefixer:develop', 'dumpCSS']
     },<% } else { %>
     css: {
-      files: ['<%= dirs.css %>/**/*.css'],
+      files: ['<%%= dirs.css %>/**/*.css'],
       tasks: ['dumpCSS']
     },<% } %>
     js: {
