@@ -3,6 +3,15 @@
 > [Yeoman] generator that scaffolds out a [SassDoc] theme.
 
 
+## Features
+
+* Let you chose your preferred template engine
+* Build the theme views and `index.js` based on prompts
+* Default Sass starter structure
+* Let you use a pre-defined Grunt or Gulp workflow
+* Templates loaded with examples and comments
+
+
 ## Usage
 
 Install `generator-sassdoc-theme`:
@@ -25,11 +34,11 @@ yo sassdoc-theme [options] [<themeName>]
 
 * `--init`
 
-  Force to prompt question and re-initialize .yo-rc.json.
+  Force to prompt question and re-initialize `.yo-rc.json`
 
 * `--skip-install`
 
-  Skips the automatic execution of `bower` and `npm` after
+  Skips the automatic execution of `npm` after
   scaffolding has finished.
 
 * `--theme-engine=[engine]`
@@ -45,12 +54,15 @@ SassDoc theme documentation:
 * [Using Your Own Theme](https://github.com/SassDoc/sassdoc/wiki/Using-Your-Own-Theme)
 * [Theme Context](https://github.com/SassDoc/sassdoc/wiki/Theme-Context)
 * [SassDoc Data Interface](https://github.com/SassDoc/sassdoc/wiki/SassDoc-Data-Interface)
-* [Themeleon](https://github.com/themeleon/themeleon/blob/master/README.md) theme engine
+* [Themeleon theme engine](https://github.com/themeleon/themeleon/blob/master/README.md)
 
 
-## Authors
+## Credits
 
-[Pascal Duez](https://github.com/pascalduez)
+* [Pascal Duez](https://twitter.com/pascalduez)
+* [Valérian Galliat](https://twitter.com/valeriangalliat)
+* [Fabrice Weinberg](https://twitter.com/fweinb)
+* [Hugo Giraudel](http://twitter.com/HugoGiraudel)
 
 
 ## Licence
