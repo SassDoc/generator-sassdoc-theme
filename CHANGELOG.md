@@ -1,4 +1,9 @@
 # generator-sassdoc-theme changelog
 
+## 0.1.1
+(2014-09-09)
+
+* Fix and issue when `sassdoc-indexer` is not used ([#10](https://github.com/SassDoc/generator-sassdoc-theme/issues/10))
+
 ## 0.1.0
 (2014-09-09)
