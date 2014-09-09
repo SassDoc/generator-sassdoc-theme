@@ -26,9 +26,6 @@
 
     {# 1. Loop over the types in `data` #}
     {% for type, items in data %}
-
-      {# If items to be displayed in type #}
-      {% if items.length > 0 %}
       <section>
           <h2>{{ type }}</h2>
 
@@ -42,8 +39,6 @@
 
           {% endfor %}
       </section>
-      {% endif %}
-
     {% endfor %}
 
     {##

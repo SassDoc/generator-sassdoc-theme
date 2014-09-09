@@ -34,19 +34,16 @@ html(lang="en")
 
     //- 1. Loop over the types in `data`
       each items, type in data
+        section
+          h2= type
 
-        //- If items to be displayed in type
-        if items.length > 0
-          section
-            h2= type
+          //- 2. Loop over the items in the current type
+          each item in items
 
-            //- 2. Loop over the items in the current type
-            each item in items
+            //- At this point it is up to you to display whatever you want from your items.
+            h3= item.context.name
 
-              //- At this point it is up to you to display whatever you want from your items.
-              h3= item.context.name
-
-              p This item belongs to group #{item.group[0][0]}.
+            p This item belongs to group #{item.group[0][0]}.
 
     //-
        If your theme needs some JavaScript, feel free to create a JS file in `assets/js/` folder
