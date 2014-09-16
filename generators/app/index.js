@@ -124,6 +124,7 @@ Generator.prototype.askFor = function askFor() {
     type: 'list',
     name: 'themeEngine',
     message: 'Which theme engine would you like to use',
+    defaul: 'swig'
     choices: [{
       name: 'Swig',
       value: 'swig'
@@ -176,7 +177,7 @@ Generator.prototype.askFor = function askFor() {
     type: 'confirm',
     name: 'useTaskRunner',
     message: 'Use a task runner or build tool [Grunt|Gulp] for managing your theme',
-    default: true
+    defaul: 'grunt'
   }, {
     when: function (answers) {
       return isset(answers) && isset(answers.useTaskRunner) && answers.useTaskRunner;
@@ -186,12 +187,10 @@ Generator.prototype.askFor = function askFor() {
     message: 'Which one would you like to use',
     choices: [{
       name: 'Grunt',
-      value: 'grunt',
-      checked: true
+      value: 'grunt'
     }, {
       name: 'Gulp',
-      value: 'gulp',
-      checked: false
+      value: 'gulp'
     }]
   });
 
