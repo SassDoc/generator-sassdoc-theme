@@ -1,6 +1,6 @@
 {
   "name": "generator-sassdoc-theme",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Scafold a new SassDoc theme",
   "keywords": [
     "yeoman-generator",

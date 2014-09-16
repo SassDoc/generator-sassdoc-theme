@@ -1,5 +1,10 @@
 # generator-sassdoc-theme changelog
 
+## 0.1.3
+(2014-09-16)
+
+* Fix previous release lame typos.
+
 ## 0.1.2
 (2014-09-16)
 

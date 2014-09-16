@@ -124,7 +124,7 @@ Generator.prototype.askFor = function askFor() {
     type: 'list',
     name: 'themeEngine',
     message: 'Which theme engine would you like to use',
-    defaul: 'swig'
+    default: 'swig',
     choices: [{
       name: 'Swig',
       value: 'swig'
