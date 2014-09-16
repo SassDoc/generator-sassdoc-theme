@@ -1,0 +1,12 @@
+<% if (useSassUtils) { %>//
+// Univeral box-sizing reset
+//
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: inherit;
+}<% } %>

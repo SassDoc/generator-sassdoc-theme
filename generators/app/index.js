@@ -170,6 +170,14 @@ Generator.prototype.askFor = function askFor() {
     name: 'useSass',
     message: chalk.red('Wait a second, u no want use Sass !?'),
     default: true
+  }, {
+    when: function (answers) {
+      return isset(answers) && isset(answers.useSass) && answers.useSass;
+    },
+    type: 'confirm',
+    name: 'useSassUtils',
+    message: 'Include a set of Sass utilities',
+    default: false
   });
 
   // Ask for task runner/build tool usage.
@@ -211,6 +219,7 @@ Generator.prototype.askFor = function askFor() {
     this.useFilter = isAnswered('useFilter');
     this.useIndexer = isAnswered('useIndexer');
     this.useSass = isAnswered('useSass');
+    this.useSassUtils = isAnswered('useSassUtils');
 
     this.useSwig = isEnabled('swig');
     this.useJade = isEnabled('jade');
@@ -229,7 +238,7 @@ Generator.prototype.askFor = function askFor() {
   }.bind(this));
 };
 
-Generator.prototype.buildPackage = function packageFiles() {
+Generator.prototype.buildPackage = function buildPackage() {
   this.sourceRoot(path.join(__dirname, '../../templates/common'));
 
   // Dotfiles.
