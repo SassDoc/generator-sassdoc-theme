@@ -4,10 +4,10 @@ var path = require('path');
 var fs = require('fs');
 var fse = require('fs-extra');
 var chalk = require('chalk');
-var q = require('q');
+var Q = require('q');
 var sassdoc = require('sassdoc');
 
-var copy = q.denodeify(fse.copy);
+var copy = Q.denodeify(fse.copy);
 
 // Set your Sass project (the one you're generating docs for) path.
 // Relative to this Gruntfile.
@@ -57,7 +57,7 @@ var config = {
     },<% } else { %>
     css: {
       files: ['<%%= dirs.css %>/**/*.css'],
-      tasks: ['dumpCSS']
+      tasks: ['autoprefixer:develop', 'dumpCSS']
     },<% } %>
     js: {
       files: ['<%%= dirs.js %>/**/*.js'],
