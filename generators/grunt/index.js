@@ -25,6 +25,7 @@ Generator.prototype.grunt = function grunt() {
       'grunt-contrib-uglify',
       'grunt-newer',
       'grunt-svgmin',
+      'grunt-contrib-imagemin',
       'load-grunt-tasks',
       'time-grunt'
     ],

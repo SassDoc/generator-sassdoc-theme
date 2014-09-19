@@ -23,7 +23,8 @@ Generator.prototype.gulp = function gulp() {
       'gulp-autoprefixer',
       'gulp-uglify',
       'gulp-cached',
-      'gulp-svgmin',
+      'gulp-imagemin',
+      'imagemin-pngcrush',
       'gulp-rename',
       'gulp-util',
       'browser-sync'

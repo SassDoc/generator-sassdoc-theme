@@ -6,7 +6,8 @@ var rubySass = require('gulp-ruby-sass');<% } %>
 var autoprefixer = require('gulp-autoprefixer');
 var uglify = require('gulp-uglify');
 var cache = require('gulp-cache');
-var svgmin = require('gulp-svgmin');
+var imagemin = require('gulp-imagemin');
+var pngcrush = require('imagemin-pngcrush');
 var rename = require('gulp-rename');
 var gutil = require('gulp-util');
 var browserSync = require('browser-sync');
@@ -35,6 +36,7 @@ var project = function () {
 var dirs = {<% if (useSass) { %>
   scss: 'scss',<% } %>
   css: 'assets/css',
+  img: 'assets/img',
   svg: 'assets/svg',
   js: 'assets/js',
   tpl: 'views',
@@ -139,10 +141,26 @@ gulp.task('develop', ['compile', 'styles', 'browser-sync'], function () {<% if (
 
 gulp.task('svgmin', function () {
   return gulp.src('assets/svg/*.svg')
-    .pipe(cache(svgmin()))
+    .pipe(cache(
+      imagemin({
+        svgoPlugins: [{removeViewBox: false}]
+      })
+    ))
     .pipe(gulp.dest('assets/svg'));
 });
 
 
-// Post release/deploy optimisation tasks.
-gulp.task('dist', ['svgmin']);
+gulp.task('imagemin', function () {
+  return gulp.src('assets/img/{,*/}*.{gif,jpeg,jpg,png}')
+    .pipe(cache(
+      imagemin({
+        progressive: true,
+        use: [pngcrush()]
+      })
+    ))
+    .pipe(gulp.dest('assets/img'));
+});
+
+
+// Pre release/deploy optimisation tasks.
+gulp.task('dist', ['svgmin', 'imagemin']);

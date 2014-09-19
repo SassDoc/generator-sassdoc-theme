@@ -24,6 +24,7 @@ var project = function () {
 var dirs = {<% if (useSass) { %>
   scss: 'scss',<% } %>
   css: 'assets/css',
+  img: 'assets/img',
   svg: 'assets/svg',
   js: 'assets/js',
   tpl: 'views',
@@ -118,6 +119,17 @@ var config = {
         cwd: '<%%= dirs.svg %>',
         src: '{,*/}*.svg',
         dest: '<%%= dirs.svg %>'
+      }]
+    }
+  },
+
+  imagemin: {
+    dist: {
+      files: [{
+        expand: true,
+        cwd: '<%%= dirs.img %>',
+        src: '{,*/}*.{gif,jpeg,jpg,png}',
+        dest: '<%%= dirs.img %>'
       }]
     }
   },
@@ -217,9 +229,10 @@ module.exports = function (grunt) {
   });
 
 
-  // Post release/deploy optimisation tasks.
+  // Pre release/deploy optimisation tasks.
   grunt.registerTask('dist', [
-    'newer:svgmin:dist'
+    'newer:svgmin:dist',
+    'newer:imagemin:dist'
   ]);
 
 };
