@@ -35,9 +35,12 @@ describe('SassDoc theme generator', function () {
       '.gitignore',
       'package.json',
       'README.md',
+      'assets/css',
+      'assets/js',
+      'assets/img',
+      'assets/svg',
       'assets/css/main.css',
-      'assets/js/main.js',
-      'assets/img/favicon.ico'
+      'assets/js/main.js'
     ];
 
     var options = {
