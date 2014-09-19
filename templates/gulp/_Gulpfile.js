@@ -5,6 +5,8 @@ var plumber = require('gulp-plumber');
 var rubySass = require('gulp-ruby-sass');<% } %>
 var autoprefixer = require('gulp-autoprefixer');
 var uglify = require('gulp-uglify');
+var cache = require('gulp-cache');
+var svgmin = require('gulp-svgmin');
 var rename = require('gulp-rename');
 var gutil = require('gulp-util');
 var browserSync = require('browser-sync');
@@ -33,6 +35,7 @@ var project = function () {
 var dirs = {<% if (useSass) { %>
   scss: 'scss',<% } %>
   css: 'assets/css',
+  svg: 'assets/svg',
   js: 'assets/js',
   tpl: 'views',
   src: project('sass'),
@@ -124,9 +127,22 @@ gulp.task('dumpCSS', ['styles'], function () {
 });
 
 
+// Development task.
+// While working on a theme.
 gulp.task('develop', ['compile', 'styles', 'browser-sync'], function () {<% if (useSass) { %>
   gulp.watch('scss/**/*.scss', ['styles', 'dumpCSS']);<% } else { %>
   gulp.watch('assets/css/**/*.css', ['styles', 'dumpCSS']);<% }%>
   gulp.watch('assets/js/**/*.js', ['dumpJS']);
   gulp.watch('views/**/*<%= tplExtensions %>', ['compile']);
 });
+
+
+gulp.task('svgmin', function () {
+  return gulp.src('assets/svg/*.svg')
+    .pipe(cache(svgmin()))
+    .pipe(gulp.dest('assets/svg'));
+});
+
+
+// Post release/deploy optimisation tasks.
+gulp.task('dist', ['svgmin']);

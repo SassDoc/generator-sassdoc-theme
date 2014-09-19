@@ -21,8 +21,10 @@ Generator.prototype.grunt = function grunt() {
       'sassdoc',
       'grunt-autoprefixer',
       'grunt-browser-sync',
-      'grunt-contrib-uglify',
       'grunt-contrib-watch',
+      'grunt-contrib-uglify',
+      'grunt-newer',
+      'grunt-svgmin',
       'load-grunt-tasks',
       'time-grunt'
     ],

@@ -24,6 +24,7 @@ var project = function () {
 var dirs = {<% if (useSass) { %>
   scss: 'scss',<% } %>
   css: 'assets/css',
+  svg: 'assets/svg',
   js: 'assets/js',
   tpl: 'views',
   src: project('sass'),
@@ -107,6 +108,17 @@ var config = {
       files: {
         '<%%= dirs.js %>/main.min.js': ['<%%= dirs.js %>/main.js']
       }
+    }
+  },
+
+  svgmin: {
+    dist: {
+      files: [{
+        expand: true,
+        cwd: '<%%= dirs.svg %>',
+        src: '{,*/}*.svg',
+        dest: '<%%= dirs.svg %>'
+      }]
     }
   },
 
@@ -203,5 +215,11 @@ module.exports = function (grunt) {
 
     grunt.task.run(tasks);
   });
+
+
+  // Post release/deploy optimisation tasks.
+  grunt.registerTask('dist', [
+    'newer:svgmin:dist'
+  ]);
 
 };

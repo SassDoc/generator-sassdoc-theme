@@ -22,6 +22,8 @@ Generator.prototype.gulp = function gulp() {
       'gulp-plumber',
       'gulp-autoprefixer',
       'gulp-uglify',
+      'gulp-cached',
+      'gulp-svgmin',
       'gulp-rename',
       'gulp-util',
       'browser-sync'
