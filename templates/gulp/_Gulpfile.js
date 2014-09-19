@@ -2,7 +2,8 @@
 
 var gulp = require('gulp');<% if (useSass) { %>
 var plumber = require('gulp-plumber');
-var rubySass = require('gulp-ruby-sass');<% } %>
+var rubySass = require('gulp-ruby-sass');<% } else { %>
+var csso = require('gulp-csso');<% } %>
 var autoprefixer = require('gulp-autoprefixer');
 var uglify = require('gulp-uglify');
 var cache = require('gulp-cache');
@@ -136,7 +137,14 @@ gulp.task('develop', ['compile', 'styles', 'browser-sync'], function () {<% if (
   gulp.watch('assets/css/**/*.css', ['styles', 'dumpCSS']);<% }%>
   gulp.watch('assets/js/**/*.js', ['dumpJS']);
   gulp.watch('views/**/*<%= tplExtensions %>', ['compile']);
-});
+});<% if (!useSass) { %>
+
+
+gulp.task('cssmin', function () {
+  return gulp.src(['assets/css/*.css', '!assets/css/*.min.css'])
+    .pipe(csso())
+    .pipe(gulp.dest('assets/css'));
+});<% } %>
 
 
 gulp.task('svgmin', function () {
@@ -163,4 +171,8 @@ gulp.task('imagemin', function () {
 
 
 // Pre release/deploy optimisation tasks.
-gulp.task('dist', ['svgmin', 'imagemin']);
+gulp.task('dist', [<% if (!useSass) { %>
+  'cssmin',<% } %>
+  'svgmin',
+  'imagemin'
+]);

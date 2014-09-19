@@ -30,7 +30,13 @@ Generator.prototype.gulp = function gulp() {
       'browser-sync'
     ]
   };
-  this.useSass && this.pkgs.devDependencies.push('gulp-ruby-sass');
+
+  if (this.useSass) {
+    this.pkgs.devDependencies.push('gulp-ruby-sass');
+  }
+  else {
+    this.pkgs.devDependencies.push('gulp-csso');
+  }
 
   this.buildTasksFile();
   this.installDependencies();

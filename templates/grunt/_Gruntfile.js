@@ -101,7 +101,19 @@ var config = {
         dest: '<%%= dirs.css %>'
       }]
     }
-  },
+  },<% if (!useSass) { %>
+
+  csso: {
+    dist: {
+      files: [{
+        expand: true,
+        cwd: '<%%= dirs.css %>',
+        src: ['*.css', '!*.min.css'],
+        dest: '<%%= dirs.css %>',
+        ext: '.min.css'
+      }]
+    }
+  },<% } %>
 
   uglify: {
     options: {},
@@ -230,7 +242,8 @@ module.exports = function (grunt) {
 
 
   // Pre release/deploy optimisation tasks.
-  grunt.registerTask('dist', [
+  grunt.registerTask('dist', [<% if (!useSass) { %>
+    'newer:csso:dist',<% } %>
     'newer:svgmin:dist',
     'newer:imagemin:dist'
   ]);
