@@ -3,7 +3,7 @@
   "description": "<%= description %>",
   "version": "<%= version %>",
   "keywords": [
-    "sassdoctheme"
+    "sassdoc-theme"
   ],
   "dependencies": {<% if (useExtras) { %>
     "sassdoc-extras": "^2.0.0",<% } %>
