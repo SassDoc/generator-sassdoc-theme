@@ -3,7 +3,7 @@
   "description": "<%= description %>",
   "version": "<%= version %>",
   "keywords": [
-    "sassdoctheme"
+    "sassdoc-theme"
   ],
   "dependencies": {<% if (useFilter) { %>
     "sassdoc-filter": "^1.0.0",<% } %><% if (useIndexer) { %>
