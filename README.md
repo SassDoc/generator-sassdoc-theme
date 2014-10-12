@@ -12,48 +12,16 @@
 * Templates loaded with examples and comments
 
 
-## Usage
-
-Install `generator-sassdoc-theme`:
-```
-npm install -g generator-sassdoc-theme
-```
-
-Make a new theme directory, and `cd` into it:
-```
-mkdir my-new-theme && cd $_
-```
-
-Run `yo sassdoc-theme`, optionally passing a theme name:
-```
-yo sassdoc-theme [options] [<themeName>]
-```
-
-
-## Options
-
-* `--init`
-
-  Force to prompt question and re-initialize `.yo-rc.json`
-
-* `--skip-install`
-
-  Skips the automatic execution of `npm` after
-  scaffolding has finished.
-
-* `--theme-engine=[engine]`
-
-  Template engine
-  Defaults to `swig`.  
-  Supported engines: `jade`, `swig`, `nunjucks`, `handlebars`
-
 ## Documentation
+
+Theme generator documentation:
+
+See [Theme generator](http://sassdoc.com/theme-generator)
 
 SassDoc theme documentation:
 
-* [Using Your Own Theme](https://github.com/SassDoc/sassdoc/wiki/Using-Your-Own-Theme)
-* [Theme Context](https://github.com/SassDoc/sassdoc/wiki/Theme-Context)
-* [SassDoc Data Interface](https://github.com/SassDoc/sassdoc/wiki/SassDoc-Data-Interface)
+* [Using Your Own Theme](http://sassdoc.com/using-your-own-theme)
+* [SassDoc Data Interface](http://sassdoc.com/data-interface)
 * [Themeleon theme engine](https://github.com/themeleon/themeleon/blob/master/README.md)
 
 
