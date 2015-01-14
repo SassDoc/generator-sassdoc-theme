@@ -9,7 +9,7 @@
     "sassdoc-filter": "^1.0.0",<% } %><% if (useIndexer) { %>
     "sassdoc-indexer": "^1.0.0",<% } %>
     "extend": "^1.0.0",
-    "themeleon": "^1.0.0"
+    "themeleon": "^3.0.0"
   },
   "engines": {
     "node": ">=0.10.0"

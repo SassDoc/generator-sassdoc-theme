@@ -1,10 +1,10 @@
 /**
- * Themeleon template helper, using the Jade module.
+ * Themeleon template helper, using consolidate.js module.
  *
  * See <https://github.com/themeleon/themeleon>.
- * See <https://github.com/themeleon/themeleon-jade>.
+ * See <https://github.com/tj/consolidate.js>.
  */
-var themeleon = require('themeleon')().use('jade');
+var themeleon = require('themeleon')().use('consolidate');
 
 /**
  * Utility function we will use to merge a default configuration
@@ -49,7 +49,7 @@ var theme = themeleon(__dirname, function (t) {
    * See <http://jade-lang.com/api>.
    */
   var options = {
-    pretty: true
+    pretty: true,
   };
 
   /**

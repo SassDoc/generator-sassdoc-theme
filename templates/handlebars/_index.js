@@ -1,10 +1,10 @@
 /**
- * Themeleon template helper, using the Handlebars module.
+ * Themeleon template helper, using consolidate.js module.
  *
  * See <https://github.com/themeleon/themeleon>.
- * See <https://github.com/themeleon/themeleon-handlebars>.
+ * See <https://github.com/tj/consolidate.js>.
  */
-var themeleon = require('themeleon')().use('handlebars');
+var themeleon = require('themeleon')().use('consolidate');
 
 /**
  * Utility function we will use to merge a default configuration
@@ -43,25 +43,18 @@ var theme = themeleon(__dirname, function (t) {
    */
   t.copy('assets');
 
+  var options = {
+    partials: {
+      foo: 'views/foo.handlebars',
+    'foo/bar': 'views/foo/bar.handlebars',
+    },
+  };
+
   /**
    * Render `views/index.handlebars` with the theme's context (`ctx` below)
    * as `index.html` in the destination directory.
    */
-  t.handlebars('views/index.handlebars', 'index.html');
-
-  /**
-   * Or include a partials object
-   */
-  //t.handlebars('views/index.handlebars', 'index.html', {
-  //  foo: 'views/foo.handlebars',
-  //  'foo/bar': 'views/foo/bar.handlebars',
-  //});
-
-  /**
-   * Or let the mixin resolve all `.handlebars` files in `views`
-   * Note: `.handlebars` and `.hbs` extensions are supported.
-   */
-  //t.handlebars('views/index.handlebars', 'index.html', 'views');
+  t.handlebars('views/index.handlebars', 'index.html', options);
 });
 
 /**

@@ -1,10 +1,10 @@
 /**
- * Themeleon template helper, using the Nunjucks module.
+ * Themeleon template helper, using consolidate.js module.
  *
  * See <https://github.com/themeleon/themeleon>.
- * See <https://github.com/themeleon/themeleon-nunjucks>.
+ * See <https://github.com/tj/consolidate.js>.
  */
-var themeleon = require('themeleon')().use('nunjucks');
+var themeleon = require('themeleon')().use('consolidate');
 
 /**
  * Utility function we will use to merge a default configuration
@@ -42,13 +42,6 @@ var theme = themeleon(__dirname, function (t) {
    * destination directory.
    */
   t.copy('assets');
-
-  /**
-   * Configure Nunjucks views basePath and options.
-   *
-   * see <https://mozilla.github.io/nunjucks/api.html#configure>
-   */
-  //t.nunjucks.configure('views', options);
 
   /**
    * Render `views/index.nunjucks` with the theme's context (`ctx` below)
