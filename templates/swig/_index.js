@@ -10,21 +10,15 @@ var themeleon = require('themeleon')().use('consolidate');
  * Utility function we will use to merge a default configuration
  * with the user object.
  */
-var extend = require('extend');<% if (useFilter) { %>
+var extend = require('extend');<% if (useExtras) { %>
 
 /**
-  * SassDoc filters (providing Markdown and other helpers).
-  *
-  * See <https://github.com/SassDoc/sassdoc-filter>.
-  */
-var filter = require('sassdoc-filter');<% } %><% if (useIndexer) { %>
-
-/**
- * SassDoc indexer module, to index data with a certain granularity.
+ * SassDoc extras (providing Markdown and other filters, and different way to
+ * index SassDoc data).
  *
- * See <https://github.com/SassDoc/sassdoc-indexer>.
+ * See <https://github.com/SassDoc/sassdoc-extras>.
  */
-var indexer = require('sassdoc-indexer');<% } %>
+var extras = require('sassdoc-extras');<% } %>
 
 /**
  * The theme function. You can directly export it like this:
@@ -59,22 +53,24 @@ var theme = themeleon(__dirname, function (t) {
  * configuration.
  */
 module.exports = function (dest, ctx) {
-  if (!('view' in ctx)) {
-    ctx.view = {};
-  }
-
-  // Extend default config with `ctx.view` object
-  ctx.view = extend({
+  var def = {
     display: {
       access: ['public', 'private'],
       alias: false,
-      watermark: true
+      watermark: true,
     },
     groups: {
-      'undefined': 'General'
+      'undefined': 'General',
     },
-    'shortcutIcon': 'http://sass-lang.com/favicon.ico'
-  }, ctx.view);<% if (useFilter) { %>
+    'shortcutIcon': 'http://sass-lang.com/favicon.ico',
+  };
+
+  // Apply default values for groups and display.
+  ctx.groups = extend(def.groups, ctx.groups);
+  ctx.display = extend(def.display, ctx.display);
+
+  // Extend top-level context keys.
+  ctx = extend({}, def, ctx);<% if (useExtras) { %>
 
   /**
    * Parse text data (like descriptions) as Markdown, and put the
@@ -83,9 +79,9 @@ module.exports = function (dest, ctx) {
    * For example, `ctx.package.description` will be parsed as Markdown
    * in `ctx.package.htmlDescription`.
    *
-   * See <https://github.com/SassDoc/sassdoc-filter#markdown>.
+   * See <http://sassdoc.com/extra-tools/#markdown>.
    */
-  filter.markdown(ctx);
+  extras.markdown(ctx);
 
   /**
    * Add a `display` property for each data item regarding of display
@@ -101,9 +97,9 @@ module.exports = function (dest, ctx) {
    *       }
    *     }
    *
-   * See <https://github.com/SassDoc/sassdoc-filter#display>.
+   * See <http://sassdoc.com/extra-tools/#display-toggle>.
    */
-  filter.display(ctx);
+  extras.display(ctx);
 
   /**
    * Allow the user to give a name to the documentation groups.
@@ -113,9 +109,9 @@ module.exports = function (dest, ctx) {
    *
    * **Note:** all items without a group are in the `undefined` group.
    *
-   * See <https://github.com/SassDoc/sassdoc-filter#group-name>.
+   * See <http://sassdoc.com/extra-tools/#groups-aliases>.
    */
-  filter.groupName(ctx);<% } %><% if (useIndexer) { %>
+  extras.groupName(ctx);
 
   /**
    * Use SassDoc indexer to index the data by group and type, so we
@@ -137,7 +133,7 @@ module.exports = function (dest, ctx) {
    * You can then use `data.byGroupAndType` instead of `data` in your
    * templates to manipulate the indexed object.
    */
-  ctx.data.byGroupAndType = indexer.byGroupAndType(ctx.data);<% } %>
+  ctx.data.byGroupAndType = extras.byGroupAndType(ctx.data);<% } %>
 
   /**
    * Now we have prepared the data, we can proxy to the Themeleon

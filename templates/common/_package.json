@@ -5,9 +5,8 @@
   "keywords": [
     "sassdoctheme"
   ],
-  "dependencies": {<% if (useFilter) { %>
-    "sassdoc-filter": "^1.0.0",<% } %><% if (useIndexer) { %>
-    "sassdoc-indexer": "^1.0.0",<% } %>
+  "dependencies": {<% if (useExtras) { %>
+    "sassdoc-extras": "^2.0.0",<% } %>
     "extend": "^1.0.0",
     "themeleon": "^3.0.0"
   },
