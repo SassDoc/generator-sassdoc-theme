@@ -35,8 +35,7 @@ Generator.prototype.install = function install() {
 
   var pkgs = {
     dependencies: [
-      'swig',
-      'themeleon-swig'
+      'swig'
     ],
     devDependencies: []
   };

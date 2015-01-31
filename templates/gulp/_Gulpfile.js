@@ -84,9 +84,6 @@ gulp.task('browser-sync', function () {
 
 // A custom task to compile through SassDoc API.
 gulp.task('compile', function () {
-  var src = dirs.src;
-  var dest = dirs.docs;
-
   var config = {
     verbose: true,
     theme: '.',
@@ -97,10 +94,9 @@ gulp.task('compile', function () {
     // }
   };
 
-  // Enable verbose.
-  sassdoc.logger.enabled = config['verbose'];
+  return gulp.src(path.join(dirs.src, '**/*.scss'))
+    .pipe(sassdoc(config));
 
-  return sassdoc.documentize(src, dest, config);
 });
 
 

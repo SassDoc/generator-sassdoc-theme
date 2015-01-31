@@ -159,8 +159,7 @@ var config = {
       // }
     },
     develop: {
-      src: '<%%= dirs.src %>',
-      dest: '<%%= dirs.docs %>',
+      src: '<%%= dirs.src %>'
     }
   }
 
@@ -184,15 +183,9 @@ module.exports = function (grunt) {
     var done = this.async();
     var config = this.options({});
 
-    // Enable verbose.
-    sassdoc.logger.enabled = config['verbose'];
-
     var src = this.filesSrc[0];
-    var dest = this.files[0].dest;
 
-    sassdoc
-      .documentize(src, dest, config)
-      .then(done);
+    sassdoc(src, config).then(done);
   });
 
 

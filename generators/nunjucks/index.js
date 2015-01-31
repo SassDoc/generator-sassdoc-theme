@@ -35,7 +35,7 @@ Generator.prototype.install = function install() {
 
   var pkgs = {
     dependencies: [
-      'themeleon-nunjucks'
+      'nunjucks'
     ],
     devDependencies: []
   };
