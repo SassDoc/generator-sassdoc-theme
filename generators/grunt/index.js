@@ -34,12 +34,9 @@ Generator.prototype.grunt = function grunt() {
     ]
   };
 
-  if (this.useSass) {
-    this.pkgs.devDependencies.push('grunt-contrib-sass');
-  }
-  else {
-    this.pkgs.devDependencies.push('grunt-csso');
-  }
+  this.pkgs.devDependencies.push(
+    this.useSass ? 'grunt-contrib-sass' : 'grunt-csso'
+  );
 
   this.buildTasksFile();
   this.installDependencies();

@@ -31,12 +31,9 @@ Generator.prototype.gulp = function gulp() {
     ]
   };
 
-  if (this.useSass) {
-    this.pkgs.devDependencies.push('gulp-ruby-sass');
-  }
-  else {
-    this.pkgs.devDependencies.push('gulp-csso');
-  }
+  this.pkgs.devDependencies.push(
+    this.useSass ? 'gulp-ruby-sass' : 'gulp-csso'
+  );
 
   this.buildTasksFile();
   this.installDependencies();
