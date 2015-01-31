@@ -140,19 +140,11 @@ Generator.prototype.askFor = function askFor() {
     }]
   });
 
-  // Ask for sassdoc-filter usage.
-  shouldPrompt('useFilter') && questions.push({
+  // Ask for sassdoc-extras usage.
+  shouldPrompt('useExtras') && questions.push({
     type: 'confirm',
-    name: 'useFilter',
-    message: 'Include and use sassdoc-filter',
-    default: true
-  });
-
-  // Ask for sassdoc-indexer usage.
-  shouldPrompt('useIndexer') && questions.push({
-    type: 'confirm',
-    name: 'useIndexer',
-    message: 'Include and use sassdoc-indexer',
+    name: 'useExtras',
+    message: 'Include and use sassdoc-extras',
     default: true
   });
 
@@ -216,8 +208,7 @@ Generator.prototype.askFor = function askFor() {
     this.description = answers.themeDesc || this.config.get('themeDesc');
     this.version = answers.version;
     this.themeEngine = answers.themeEngine || this.config.get('themeEngine');
-    this.useFilter = isAnswered('useFilter');
-    this.useIndexer = isAnswered('useIndexer');
+    this.useExtras = isAnswered('useExtras');
     this.useSass = isAnswered('useSass');
     this.useSassUtils = isAnswered('useSassUtils');
 
@@ -264,8 +255,7 @@ Generator.prototype.buildViews = function buildViews() {
   var options = {
     'skip-message': this.options['skip-install-message'],
     'skip-install': this.options['skip-install'],
-    useFilter: this.useFilter,
-    useIndexer: this.useIndexer
+    useExtras: this.useExtras
   };
 
   this.on('install', function () {

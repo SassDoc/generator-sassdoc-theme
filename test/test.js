@@ -52,8 +52,7 @@ describe('SassDoc theme generator', function () {
 
     var prompts = {
       themeEngine: false,
-      useFilter: false,
-      useIndexer: false,
+      useExtras: false,
       useSass: false,
       useTaskRunner: false
     };
