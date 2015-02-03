@@ -1,13 +1,9 @@
 'use strict';
 
 var path = require('path');
-var fs = require('fs');
-var fse = require('fs-extra');
-var chalk = require('chalk');
-var Q = require('q');
-var sassdoc = require('sassdoc');
-
-var copy = Q.denodeify(fse.copy);
+var fs = require('fs-extra');
+var Promise = require('bluebird');
+var copy = Promise.promisify(fs.copy);
 
 // Set your Sass project (the one you're generating docs for) path.
 // Relative to this Gruntfile.
@@ -29,10 +25,10 @@ var dirs = {<% if (useSass) { %>
   js: 'assets/js',
   tpl: 'views',
   src: project('sass'),
-  docs: project('docs')
+  docs: project('sassdoc')
 };
 
-// Tasks configs.
+// Tasks configuration.
 var config = {
 
   dirs: dirs,<% if (useSass) { %>
@@ -55,19 +51,19 @@ var config = {
   watch: {<% if (useSass) { %>
     scss: {
       files: ['<%%= dirs.scss %>/**/*.scss'],
-      tasks: ['sass:develop', 'autoprefixer:develop', 'dumpCSS']
+      tasks: ['sass:develop', 'autoprefixer:develop', 'dump:css']
     },<% } else { %>
     css: {
       files: ['<%%= dirs.css %>/**/*.css'],
-      tasks: ['autoprefixer:develop', 'dumpCSS']
+      tasks: ['autoprefixer:develop', 'dump:css']
     },<% } %>
     js: {
       files: ['<%%= dirs.js %>/**/*.js'],
-      tasks: ['dumpJS']
+      tasks: ['dump:js']
     },
     tpl: {
       files: ['<%%= dirs.tpl %>/**/*<%= tplExtensions %>'],
-      tasks: ['compile:develop']
+      tasks: ['sassdoc:develop']
     }
   },
 
@@ -117,7 +113,7 @@ var config = {
 
   uglify: {
     options: {},
-    develop: {
+    dist: {
       files: {
         '<%%= dirs.js %>/main.min.js': ['<%%= dirs.js %>/main.js']
       }
@@ -146,12 +142,13 @@ var config = {
     }
   },
 
-  // SassDoc compilation (documentize).
-  // See: https://github.com/SassDoc/sassdoc/wiki/Customising-the-View
-  compile: {
+  // SassDoc compilation.
+  // See: http://sassdoc.com/customising-the-view/
+  sassdoc: {
     options: {
       verbose: true,
-      theme: '.',
+      dest: dirs.docs,
+      theme: './',
       // basePath: '',
       // package: project('package.json'),
       // groups: {
@@ -178,46 +175,19 @@ module.exports = function (grunt) {
   grunt.initConfig(config);
 
 
-  // A custom task to compile through SassDoc API.
-  grunt.registerMultiTask('compile', 'Generates documentation', function () {
+  // Dump css or js files from theme into `docs/assets` whenever they get modified.
+  // Prevent requiring a full SassDoc compilation.
+  grunt.registerTask('dump', 'Dump CSS/JS to docs/assets', function () {
     var done = this.async();
-    var config = this.options({});
+    var target = this.args[0];
+    var src = dirs[target];
+    var dest = path.join(dirs.docs, 'assets', target);
 
-    var src = this.filesSrc[0];
-
-    sassdoc(src, config).then(done);
+    copy(src, dest).then(function () {
+      grunt.log.ok('Dump: ' + src + ' copied to ' + path.relative(__dirname, dest));
+      done();
+    });
   });
-
-
-  // Dump js files from theme into `docs/assets` whenever they get modified.
-  // Prevent requiring a full `compile`.
-  grunt.registerTask('dumpJS', 'Dump JS to docs/assets', function () {
-    var done = this.async();
-    var src = dirs.js;
-    var dest = path.join(dirs.docs, 'assets/js');
-
-    copy(src, dest)
-      .then(function () {
-        grunt.log.writeln('JS ' + chalk.cyan(src) + ' copied to ' + chalk.cyan(dest) + '.');
-        done();
-      });
-  });
-
-
-  // Dump CSS files from theme into `docs/assets` whenever they get modified.
-  // Prevent requiring a full `compile`.
-  grunt.registerTask('dumpCSS', 'Dump CSS to docs/assets', function () {
-    var done = this.async();
-    var src = dirs.css;
-    var dest = path.join(dirs.docs, 'assets/css');
-
-    copy(src, dest)
-      .then(function () {
-        grunt.log.writeln('CSS ' + chalk.cyan(src) + ' copied to ' + chalk.cyan(dest) + '.');
-        done();
-      });
-  });
-
 
   // Development task.
   // While working on a theme.
@@ -226,8 +196,8 @@ module.exports = function (grunt) {
     var docs = fs.existsSync(dirs.docs);
 
     if (!docs) {
-      grunt.log.writeln('Running initial compile: ' + chalk.cyan(dirs.docs) + '.');
-      tasks.unshift('compile:develop');
+      grunt.log.ok('Running initial SassDoc compilation: ' + dirs.docs);
+      tasks.unshift('sassdoc:develop');
     }
 
     grunt.task.run(tasks);
@@ -237,6 +207,7 @@ module.exports = function (grunt) {
   // Pre release/deploy optimisation tasks.
   grunt.registerTask('dist', [<% if (!useSass) { %>
     'newer:csso:dist',<% } %>
+    'uglify:dist',
     'newer:svgmin:dist',
     'newer:imagemin:dist'
   ]);

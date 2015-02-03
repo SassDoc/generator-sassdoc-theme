@@ -15,10 +15,9 @@ Generator.prototype.grunt = function grunt() {
   this.pkgs = {
     dependencies: [],
     devDependencies: [
-      'chalk',
       'fs-extra',
-      'q',
-      'sassdoc',
+      'bluebird',
+      'grunt-sassdoc',
       'grunt-autoprefixer',
       'grunt-browser-sync',
       'grunt-contrib-watch',
