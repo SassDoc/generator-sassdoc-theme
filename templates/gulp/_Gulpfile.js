@@ -1,26 +1,25 @@
 'use strict';
 
 var gulp = require('gulp');<% if (useSass) { %>
-var plumber = require('gulp-plumber');
-var rubySass = require('gulp-ruby-sass');<% } else { %>
+var sass = require('gulp-sass');<% } else { %>
 var csso = require('gulp-csso');<% } %>
-var autoprefixer = require('gulp-autoprefixer');
+var postcss = require('gulp-postcss');
 var uglify = require('gulp-uglify');
-var cache = require('gulp-cache');
-var imagemin = require('gulp-imagemin');
-var pngcrush = require('imagemin-pngcrush');
+var cache = require('gulp-cached');
+// var imagemin = require('gulp-imagemin');
+// var pngcrush = require('imagemin-pngcrush');
 var rename = require('gulp-rename');
 var gutil = require('gulp-util');
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 
 var path = require('path');
-var fs = require('fs');
-var fse = require('fs-extra');
-var Q = require('q');
+var fs = require('fs-extra');
+var Promise = require('bluebird');
+var copy = Promise.promisify(fs.copy);
+
 var sassdoc = require('sassdoc');
 
-var copy = Q.denodeify(fse.copy);
 
 // Set your Sass project (the one you're generating docs for) path.
 // Relative to this Gulpfile.
@@ -42,29 +41,21 @@ var dirs = {<% if (useSass) { %>
   js: 'assets/js',
   tpl: 'views',
   src: project('sass'),
-  docs: project('docs')
+  docs: project('sassdoc')
 };
 
 
-gulp.task('styles', function () {<% if (useSass) { %>
-  return gulp.src('scss/main.scss')
-    .pipe(plumber())
-    .pipe(rubySass({
-      style: 'compressed'
-    }))<% } else { %>
+gulp.task('styles', function () {
+  var browsers = ['last 2 version', '> 1%', 'ie 9'];
+  var processors = [
+    require('autoprefixer-core')({ browsers: browsers }),
+  ];<% if (useSass) { %>
+
+  return gulp.src('./scss/**/*.scss')
+    .pipe(sass())<% } else { %>
   return gulp.src('assets/css/main.css')<% } %>
-    .pipe(autoprefixer('last 2 version', '> 1%', 'ie 9'))
+    .pipe(postcss(processors))
     .pipe(gulp.dest('assets/css'));
-});
-
-
-gulp.task('compress', function () {
-  return gulp.src('assets/js/*.js')
-    .pipe(uglify())
-    .pipe(rename(function (path) {
-      path.extname = '.min.js';
-    }))
-    .pipe(gulp.dest('assets/js'));
 });
 
 
@@ -74,42 +65,45 @@ gulp.task('browser-sync', function () {
       baseDir: dirs.docs
     },
     files: [
-      dirs.docs + '/*.html',
-      dirs.docs + '/assets/css/**/*.css',
-      dirs.docs + '/assets/js/**/*.js'
+      path.join(dirs.docs, '/*.html'),
+      path.join(dirs.docs, '/assets/css/**/*.css'),
+      path.join(dirs.docs, '/assets/js/**/*.js')
     ]
   });
 });
 
 
-// A custom task to compile through SassDoc API.
+// SassDoc compilation.
+// See: http://sassdoc.com/customising-the-view/
 gulp.task('compile', function () {
   var config = {
     verbose: true,
-    theme: '.',
-    // basePath: '',
-    // package: project('package.json'),
-    // groups: {
-    //   'undefined': 'General'
-    // }
+    dest: dirs.docs,
+    theme: './',
+    // Disable cache to enable live-reloading.
+    // Usefull for some template engines (e.g. Swig).
+    cache: false,
   };
 
-  return gulp.src(path.join(dirs.src, '**/*.scss'))
-    .pipe(sassdoc(config));
+  var sdStream = sassdoc(config);
 
+  gulp.src(path.join(dirs.src, '**/*.scss'))
+    .pipe(sdStream);
+
+  // Await for the full documentation process.
+  return sdStream.promise;
 });
 
 
-// Dump js files from theme into `docs/assets` whenever they get modified.
+// Dump JS files from theme into `docs/assets` whenever they get modified.
 // Prevent requiring a full `compile`.
 gulp.task('dumpJS', function () {
   var src = dirs.js;
   var dest = path.join(dirs.docs, 'assets/js');
 
-  return copy(src, dest)
-    .then(function () {
-      gutil.log('JS ' + gutil.colors.cyan(src) + ' copied to ' + gutil.colors.cyan(dest) + '.');
-    });
+  return copy(src, dest).then(function () {
+    gutil.log(src + ' copied to ' + path.relative(__dirname, dest));
+  });
 });
 
 
@@ -119,10 +113,9 @@ gulp.task('dumpCSS', ['styles'], function () {
   var src = dirs.css;
   var dest = path.join(dirs.docs, 'assets/css');
 
-  return copy(src, dest)
-    .then(function () {
-      gutil.log('CSS ' + gutil.colors.cyan(src) + ' copied to ' + gutil.colors.cyan(dest) + '.');
-    });
+  return copy(src, dest).then(function () {
+    gutil.log(src + ' copied to ' + path.relative(__dirname, dest));
+  });
 });
 
 
@@ -136,6 +129,16 @@ gulp.task('develop', ['compile', 'styles', 'browser-sync'], function () {<% if (
 });<% if (!useSass) { %>
 
 
+gulp.task('jsmin', function () {
+  return gulp.src('assets/js/*.js')
+    .pipe(uglify())
+    .pipe(rename(function (path) {
+      path.extname = '.min.js';
+    }))
+    .pipe(gulp.dest('assets/js'));
+});
+
+
 gulp.task('cssmin', function () {
   return gulp.src(['assets/css/*.css', '!assets/css/*.min.css'])
     .pipe(csso())
@@ -147,7 +150,7 @@ gulp.task('svgmin', function () {
   return gulp.src('assets/svg/*.svg')
     .pipe(cache(
       imagemin({
-        svgoPlugins: [{removeViewBox: false}]
+        svgoPlugins: [{ removeViewBox: false }]
       })
     ))
     .pipe(gulp.dest('assets/svg'));
@@ -167,8 +170,9 @@ gulp.task('imagemin', function () {
 
 
 // Pre release/deploy optimisation tasks.
-gulp.task('dist', [<% if (!useSass) { %>
+gulp.task('dist', [
+  'jsmin',<% if (!useSass) { %>
   'cssmin',<% } %>
   'svgmin',
-  'imagemin'
+  'imagemin',
 ]);

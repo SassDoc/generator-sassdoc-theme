@@ -16,11 +16,11 @@ Generator.prototype.gulp = function gulp() {
     dependencies: [],
     devDependencies: [
       'fs-extra',
-      'q',
+      'bluebird',
       'sassdoc',
       'gulp',
-      'gulp-plumber',
-      'gulp-autoprefixer',
+      'gulp-postcss',
+      'autoprefixer-core',
       'gulp-uglify',
       'gulp-cached',
       'gulp-imagemin',
@@ -32,7 +32,7 @@ Generator.prototype.gulp = function gulp() {
   };
 
   this.pkgs.devDependencies.push(
-    this.useSass ? 'gulp-ruby-sass' : 'gulp-csso'
+    this.useSass ? 'gulp-sass' : 'gulp-csso'
   );
 
   this.buildTasksFile();

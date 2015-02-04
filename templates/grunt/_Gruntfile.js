@@ -149,11 +149,9 @@ var config = {
       verbose: true,
       dest: dirs.docs,
       theme: './',
-      // basePath: '',
-      // package: project('package.json'),
-      // groups: {
-      //   'undefined': 'General'
-      // }
+      // Disable cache to enable live-reloading.
+      // Usefull for some template engines (e.g. Swig).
+      cache: false,
     },
     develop: {
       src: '<%%= dirs.src %>'
