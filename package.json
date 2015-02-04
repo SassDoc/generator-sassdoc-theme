@@ -37,6 +37,15 @@
     "type": "unlicence",
     "url": "http://unlicense.org"
   },
+  "files": [
+    "generators",
+    "lib",
+    "templates",
+    "utils",
+    "CHANGELOG.md",
+    "README.md",
+    "UNLICENSE"
+  ],
   "dependencies": {
     "chalk": "^0.5.1",
     "yeoman-generator": "^0.17.3",
