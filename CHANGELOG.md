@@ -1,5 +1,11 @@
 # generator-sassdoc-theme changelog
 
+## 0.2.0
+(2015-02-04)
+
+* Update to SassDoc core 2.0.
+* Updates and fixes in Grunt and Gulp sub-generators.
+
 ## 0.1.3
 (2014-09-16)
 
