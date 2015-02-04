@@ -1,7 +1,10 @@
-# generator-sassdoc-theme [![npm version](http://img.shields.io/npm/v/generator-sassdoc-theme.svg?style=flat)](https://www.npmjs.org/package/generator-sassdoc-theme) [![Build Status: Linux](http://img.shields.io/travis/SassDoc/generator-sassdoc-theme.svg?style=flat)](https://travis-ci.org/SassDoc/generator-sassdoc-theme?branch=master)
+# generator-sassdoc-theme
 
 > [Yeoman] generator that scaffolds out a [SassDoc] theme.
 
+<br>
+[![npm version][npm-image]][npm-url]
+[![Build Status][travis-image]][travis-url]
 
 ## Features
 
@@ -40,3 +43,7 @@ generator-sassdoc-theme is [unlicensed](http://unlicense.org/).
 
 [Yeoman]: http://yeoman.io
 [SassDoc]: https://github.com/SassDoc/sassdoc
+[npm-url]: https://www.npmjs.org/package/generator-sassdoc-theme
+[npm-image]: http://img.shields.io/npm/v/generator-sassdoc-theme.svg?style=flat-square
+[travis-url]: https://travis-ci.org/SassDoc/generator-sassdoc-theme?branch=master
+[travis-image]: http://img.shields.io/travis/SassDoc/generator-sassdoc-theme.svg?style=flat-square
