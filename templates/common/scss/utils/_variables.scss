@@ -1,26 +1,25 @@
-<% if (useSassUtils) { %>/**
- * Map of colors for quick grabbing.
- *
- * @prop {Color} pink (#c6538c) - pink
- * @prop {Color} white (#f9f9f9) - white
- *
- * @see {function} color
- *
- * @type Map
- */
+<% if (useSassUtils) { %>
+/// Map of colors for quick grabbing.
+///
+/// @prop {Color} pink [#c6538c] - pink
+/// @prop {Color} white [#f9f9f9] - white
+///
+/// @see {function} color
+///
+/// @type Map
+
 $colors: (
   "pink":  #c6538c,
   "white": #f9f9f9
 ) !global;
 
 
-/**
- * Map of breakpoints for responsive design.
- *
- * @see {mixin} respond-to
- *
- * @type Map
- */
+/// Map of breakpoints for responsive design.
+///
+/// @see {mixin} respond-to
+///
+/// @type Map
+
 $breakpoints: (
   "small":  (max-width: 800px),
   "medium": (min-width: 801px)
