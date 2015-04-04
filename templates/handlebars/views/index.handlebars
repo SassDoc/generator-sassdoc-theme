@@ -24,7 +24,7 @@
      ! types as second level (`function`, `variable` or `mixin`), items as third level.
      ! So: `groups > types > items`.
      !
-        data.byGroupAndType = {
+        _data.byGroupAndType = {
             'undefined': {
                 'function': [ ... ],
                 'mixin': [ ... ],
@@ -52,13 +52,13 @@
 
     {{!
      ! To display our items, we need to:
-     ! 1. Loop over `data.byGroupAndType` groups
+     ! 1. Loop over `_data.byGroupAndType` groups
      ! 2. Loop over types mapped to each group
      ! 3. Loop over items mapped to each type
      }}
 
-    {{! 1. Loop over the groups in `data.byGroupAndType` }}
-    {{#each data.byGroupAndType }}
+    {{! 1. Loop over the groups in `_data.byGroupAndType` }}
+    {{#each _data.byGroupAndType }}
     <section>
         {{! Retrieve group alias if any (else group name) }}
         <h1>{{ groups.[@key] }}</h1>
