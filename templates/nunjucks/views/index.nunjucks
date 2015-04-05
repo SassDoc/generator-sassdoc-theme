@@ -28,7 +28,7 @@
             'undefined': {
                 'function': [ ... ],
                 'mixin': [ ... ],
-                'variable': [ ... ]
+                'variable': [ ... ],
             }
         }
      #
@@ -43,7 +43,7 @@
      # or the same group name. For instance:
      #
         groups = {
-            'undefined': 'My Awesome Default Group'
+            'undefined': 'My Awesome Default Group',
         }
      #
      # To retrieve the alias of a group, use `groups[group_name]`. In this case, `groups['undefined']` will
