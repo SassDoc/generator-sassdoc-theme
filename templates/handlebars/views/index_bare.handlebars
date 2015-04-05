@@ -25,20 +25,20 @@
      }}
 
     {{! 1. Loop over the types in `data` }}
-    {{#each data }}
+    {{#each data}}
 
       {{! If items to be displayed in type }}
-      {{#if this }}
+      {{#if this}}
       <section>
           <h2>{{ @key }}</h2>
 
           {{! 2. Loop over the items in the current type }}
-          {{#each this }}
+          {{#each this}}
 
           {{! At this point it is up to you to display whatever you want from your items. }}
           <h3>{{ context.name }}</h3>
 
-          <p>This item belongs to group {{ item.group.0.0 }}.</p>
+          <p>This item belongs to group {{item.group.0.0}}.</p>
 
           {{/each}}
       </section>

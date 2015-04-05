@@ -16,7 +16,7 @@
      ! You can access any variable you set in your configuration file from the `view` object.
      ! Basically your configuration file is passed to the view as the `view` object.
      }}
-    {{ view.test_variable }}
+    {{view.test_variable}}
 
     {{!
      ! Data comes with a `byGroupAndType` key which contains the data tree
@@ -58,24 +58,24 @@
      }}
 
     {{! 1. Loop over the groups in `data.byGroupAndType` }}
-    {{#each data.byGroupAndType }}
+    {{#each data.byGroupAndType}}
     <section>
         {{! Retrieve group alias if any (else group name) }}
-        <h1>{{ groups.[@key] }}</h1>
+        <h1>{{groups.[@key]}}</h1>
 
         {{! 2. Loop over the types in the current group }}
-        {{#each this }}
+        {{#each this}}
 
         {{! If items to be displayed in type }}
-        {{#if this }}
+        {{#if this}}
         <section>
-            <h2>{{ @key }}</h2>
+            <h2>{{@key}}</h2>
 
             {{! 3. Loop over the items in the current type }}
-            {{#each this }}
+            {{#each this}}
 
             {{! At this point it is up to you to display whatever you want from your items. }}
-            <h3>{{ context.name }}</h3>
+            <h3>{{context.name}}</h3>
 
             {{/each}}
         </section>
