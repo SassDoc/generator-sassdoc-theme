@@ -1,113 +1,17 @@
-<% if (useSassUtils) { %>/**
- * Mixin to size elements.
- *
- * @param {Number} $width           - Width
- * @param {Number} $height ($width) - Height
- */
+<% if (useSassUtils) { %>
+/// Mixin to size elements.
+/// @param {Number} $width           - Width
+/// @param {Number} $height [$width] - Height
 @mixin size($width, $height: $width) {
   width: $width;
   height: $height;
 }
 
 
-/**
- * Shorthand for positioning.
- *
- * @link http://hugogiraudel.com/2013/08/05/offsets-sass-mixin/ Documentation
- *
- * @requires {function} is-valid-length
- *
- * @param {String} $position      - Position type (either `absolute`, `fixed` or `relative`)
- * @param {List}   $args     (()) - List of offsets and values
- *
- * @throws Invalid value `$next` for offset `$offset`.
- */
-@mixin position($position: null, $args: ()) {
-  $offsets: top right bottom left;
-  position: $position;
-
-  @each $offset in $offsets {
-    $index: index($args, $offset);
-
-    @if $index {
-      @if $index == length($args) {
-        #{$offset}: 0;
-      }
-
-      @else {
-        $next: nth($args, $index + 1);
-
-        @if is-valid-length($next) {
-          #{$offset}: $next;
-        }
-
-        @else if index($offsets, $next) {
-          #{$offset}: 0;
-        }
-
-        @else {
-          @warn "Invalid value `#{$next}` for offset `#{$offset}`.";
-        }
-      }
-    }
-  }
-}
-
-
-/**
- * Shorthand for absolute positioning.
- *
- * @link http://hugogiraudel.com/2014/05/19/new-offsets-sass-mixin/ Documentation
- *
- * @requires {mixin} position
- *
- * @param {List} $args - List of offsets and values
- *
- * @example scss - Stretch an item over its parent.
- *   @include absolute(top 0 right 0 bottom 0 left 0)
- */
-@mixin absolute($args) {
-  @include position(absolute, $args);
-}
-
-
-/**
- * Shorthand for relative positioning.
- *
- * @link http://hugogiraudel.com/2014/05/19/new-offsets-sass-mixin/ Documentation
- *
- * @requires {mixin} position
- *
- * @param {List} $args - List of offsets and values
- */
-@mixin relative($args) {
-  @include position(relative, $args);
-}
-
-
-/**
- * Shorthand for fixed positioning.
- *
- * @link http://hugogiraudel.com/2014/05/19/new-offsets-sass-mixin/ Documentation
- *
- * @requires {mixin} position
- *
- * @param {List} $args - List of offsets and values
- */
-@mixin fixed($args) {
-  @include position(fixed, $args);
-}
-
-
-/**
- * Responsive manager.
- *
- * @requires {variable} breakpoints
- *
- * @param {String} $breakpoint - Breakpoint
- *
- * @throws No value found for `$breakpoint`. Please make sure it is defined in `$breakpoints` map.
- */
+/// Responsive manager.
+/// @requires {variable} breakpoints
+/// @param {String} $breakpoint - Breakpoint
+/// @throws No value found for `$breakpoint`. Please make sure it is defined in `$breakpoints` map.
 @mixin respond-to($breakpoint) {
   // If the key exists in the map
   @if map-has-key($breakpoints, $breakpoint) {
@@ -122,28 +26,4 @@
     @warn "No value found for `#{$breakpoint}`. "
         + "Please make sure it is defined in `$breakpoints` map.";
   }
-}
-
-
-/**
- * Mixin for cross-browser opacity (IE 8).
- *
- * @param {Number} $opacity - Opacity level, between 0 and 1
- */
-@mixin opacity($opacity) {
-  $opacity: $opacity;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=#{$opacity * 100})";
-  opacity: $opacity;
-}
-
-
-/**
- * Mixin handling inline-block and vertical-align at once.
- * If no align is specified, then the `vertical-align` property won't be output.
- *
- * @param {String} $align (null) - Vertical align
- */
-@mixin inline-block($align: null) {
-  display: inline-block;
-  vertical-align: $align;
 }<% } %>

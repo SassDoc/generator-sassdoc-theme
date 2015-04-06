@@ -1,35 +1,18 @@
-<% if (useSassUtils) { %>/**
- * Color getter.
- *
- * @requires {variable} colors
- * @requires SassCore::map-has-key <http://sass-lang.com/documentation/Sass/Script/Functions.html#map_has_key-instance_method>
- *
- * @example scss
- *   color: color("pink");
- *
- * @param {String} $color - Color to fetch
- *
- * @throws No color found for `$color`. Please make sure it is defined in `$colors` map.
- *
- * @return {Color | Null}
- */
-@function color($color) {
-  @if not map-has-key($colors, $color) {
-    @warn "No color found for `#{$color}`. "
-        + "Please make sure it is defined in `$colors` map.";
-  }
-
-  @return map-get($colors, $color);
+<% if (useSassUtils) { %>
+/// Slightly lighten a color
+/// @access public
+/// @param {Color} $color - color to tint
+/// @param {Number} $percentage - percentage of `$color` in returned color
+/// @return {Color}
+@function tint($color, $percentage) {
+  @return mix($color, white, $percentage);
 }
 
-
-/**
- * Tests whether the value is a valid length.
- *
- * @param {*} $value - Value to test
- *
- * @return {Bool}
- */
-@function is-valid-length($value) {
-  @return (type-of($value) == "number" and not unitless($value)) or index("auto" "initial" "inherit" 0, $value);
+/// Slightly darken a color
+/// @access public
+/// @param {Color} $color - color to shade
+/// @param {Number} $percentage - percentage of `$color` in returned color
+/// @return {Color}
+@function shade($color, $percentage) {
+  @return mix($color, black, $percentage);
 }<% } %>

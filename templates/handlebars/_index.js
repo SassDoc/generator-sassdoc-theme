@@ -39,8 +39,9 @@ var theme = themeleon(__dirname, function (t) {
 
   var options = {
     partials: {
-      foo: 'views/foo.handlebars',
-    'foo/bar': 'views/foo/bar.handlebars',
+      // Add your partial files here.
+      // foo: 'views/foo.handlebars',
+      // 'foo/bar': 'views/foo/bar.handlebars',
     },
   };
 
