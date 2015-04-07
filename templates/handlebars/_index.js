@@ -143,7 +143,8 @@ module.exports = function (dest, ctx) {
    */
   ctx.data.byGroupAndType = extras.byGroupAndType(ctx.data);<% } %>
 
-  // Avoid key collision with Handlebars
+  // Avoid key collision with Handlebars default `data`.
+  // @see https://github.com/SassDoc/generator-sassdoc-theme/issues/22
   ctx._data = ctx.data;
   delete ctx.data;
 
