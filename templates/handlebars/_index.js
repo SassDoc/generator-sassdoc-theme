@@ -143,6 +143,10 @@ module.exports = function (dest, ctx) {
    */
   ctx.data.byGroupAndType = extras.byGroupAndType(ctx.data);<% } %>
 
+  // Avoid key collision with Handlebars
+  ctx._data = ctx.data;
+  delete ctx.data;
+
   /**
    * Now we have prepared the data, we can proxy to the Themeleon
    * generated theme function.

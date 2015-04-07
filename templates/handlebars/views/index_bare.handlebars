@@ -20,12 +20,12 @@
 
     {{!
      ! To display our items, we need to:
-     ! 1. Loop over `data` types
+     ! 1. Loop over `_data` types
      ! 2. Loop over items mapped to each type
      }}
 
     {{! 1. Loop over the types in `data` }}
-    {{#each data}}
+    {{#each _data }}
 
       {{! If items to be displayed in type }}
       {{#if this}}
