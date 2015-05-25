@@ -33,10 +33,7 @@
     "type": "git",
     "url": "git://github.com/SassDoc/generator-sassdoc-theme.git"
   },
-  "license": {
-    "type": "unlicence",
-    "url": "http://unlicense.org"
-  },
+  "license": "Unlicense",
   "files": [
     "generators",
     "lib",
