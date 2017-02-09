@@ -1,5 +1,7 @@
 # generator-sassdoc-theme
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/SassDoc/generator-sassdoc-theme.svg)](https://greenkeeper.io/)
+
 > [Yeoman] generator that scaffolds out a [SassDoc] theme.
 
 <br>
