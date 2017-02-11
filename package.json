@@ -49,17 +49,22 @@
     "yosay": "^1.0.0"
   },
   "devDependencies": {
-    "eslint": "^0.8.0",
-    "mocha": "^1.21.4"
+    "mocha": "^1.21.4",
+    "standard": "^8.6.0"
   },
   "peerDependencies": {
     "yo": ">=1.2.0"
   },
   "scripts": {
     "clean": "rm -rf test/.tmp",
-    "lint": "eslint generators/**/*.js lib/*.js utils/*.js test/*.js",
+    "lint": "standard generators/**/*.js lib/*.js utils/*.js test/*.js",
     "test": "mocha --reporter spec",
     "pretest": "$npm_package_scripts_lint & $npm_package_scripts_clean",
     "posttest": "$npm_package_scripts_clean"
+  },
+  "standard": {
+    "env": {
+      "mocha": true
+    }
   }
 }
