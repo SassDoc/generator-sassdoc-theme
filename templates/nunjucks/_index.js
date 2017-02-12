@@ -4,13 +4,13 @@
  * See <https://github.com/themeleon/themeleon>.
  * See <https://github.com/tj/consolidate.js>.
  */
-var themeleon = require('themeleon')().use('consolidate');
+var themeleon = require('themeleon')().use('consolidate')
 
 /**
  * Utility function we will use to merge a default configuration
  * with the user object.
  */
-var extend = require('extend');<% if (useExtras) { %>
+var extend = require('extend')<% if (useExtras) { %>
 
 /**
  * SassDoc extras (providing Markdown and other filters, and different way to
@@ -18,12 +18,12 @@ var extend = require('extend');<% if (useExtras) { %>
  *
  * See <https://github.com/SassDoc/sassdoc-extras>.
  */
-var extras = require('sassdoc-extras');<% } %>
+var extras = require('sassdoc-extras')<% } %>
 
 /**
  * The theme function. You can directly export it like this:
  *
- *     module.exports = themeleon(__dirname, function (t) {});
+ *     module.exports = themeleon(__dirname, function (t) {})
  *
  * ... but here we want more control on the template variables, so there
  * is a little bit of preprocessing below.
@@ -35,14 +35,14 @@ var theme = themeleon(__dirname, function (t) {
    * Copy the assets folder from the theme's directory in the
    * destination directory.
    */
-  t.copy('assets');
+  t.copy('assets')
 
   /**
    * Render `views/index.nunjucks` with the theme's context (`ctx` below)
    * as `index.html` in the destination directory.
    */
-  t.nunjucks('views/index.nunjucks', 'index.html');
-});
+  t.nunjucks('views/index.nunjucks', 'index.html')
+})
 
 /**
  * Actual theme function. It takes the destination directory `dest`
@@ -62,15 +62,15 @@ module.exports = function (dest, ctx) {
     groups: {
       'undefined': 'General',
     },
-    'shortcutIcon': 'http://sass-lang.com/favicon.ico',
-  };
+    'shortcutIcon': 'http://sass-lang.com/favicon.ico'
+  }
 
   // Apply default values for groups and display.
-  ctx.groups = extend(def.groups, ctx.groups);
-  ctx.display = extend(def.display, ctx.display);
+  ctx.groups = extend(def.groups, ctx.groups)
+  ctx.display = extend(def.display, ctx.display)
 
   // Extend top-level context keys.
-  ctx = extend({}, def, ctx);<% if (useExtras) { %>
+  ctx = extend({}, def, ctx)<% if (useExtras) { %>
 
   /**
    * Parse text data (like descriptions) as Markdown, and put the
@@ -81,7 +81,7 @@ module.exports = function (dest, ctx) {
    *
    * See <http://sassdoc.com/extra-tools/#markdown>.
    */
-  extras.markdown(ctx);
+  extras.markdown(ctx)
 
   /**
    * Add a `display` property for each data item regarding of display
@@ -99,7 +99,7 @@ module.exports = function (dest, ctx) {
    *
    * See <http://sassdoc.com/extra-tools/#display-toggle>.
    */
-  extras.display(ctx);
+  extras.display(ctx)
 
   /**
    * Allow the user to give a name to the documentation groups.
@@ -111,7 +111,7 @@ module.exports = function (dest, ctx) {
    *
    * See <http://sassdoc.com/extra-tools/#groups-aliases>.
    */
-  extras.groupName(ctx);
+  extras.groupName(ctx)
 
   /**
    * Use SassDoc indexer to index the data by group and type, so we
@@ -133,11 +133,11 @@ module.exports = function (dest, ctx) {
    * You can then use `data.byGroupAndType` instead of `data` in your
    * templates to manipulate the indexed object.
    */
-  ctx.data.byGroupAndType = extras.byGroupAndType(ctx.data);<% } %>
+  ctx.data.byGroupAndType = extras.byGroupAndType(ctx.data)<% } %>
 
   /**
    * Now we have prepared the data, we can proxy to the Themeleon
    * generated theme function.
    */
-  return theme.apply(this, arguments);
-};
+  return theme.apply(this, arguments)
+}

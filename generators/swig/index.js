@@ -1,36 +1,35 @@
-'use strict';
+'use strict'
 
-var path = require('path');
-var util = require('util');
-var yeoman = require('yeoman-generator');
-var isset = require('../../utils').isset;
+var path = require('path')
+var util = require('util')
+var yeoman = require('yeoman-generator')
+var isset = require('../../utils').isset
 
+var Generator = module.exports = function Generator () {
+  yeoman.generators.Base.apply(this, arguments)
 
-var Generator = module.exports = function Generator() {
-  yeoman.generators.Base.apply(this, arguments);
+  this.useExtras = isset(this.options.useExtras) ? this.options.useExtras : true
+}
 
-  this.useExtras = isset(this.options.useExtras) ? this.options.useExtras : true;
-};
+util.inherits(Generator, yeoman.generators.Base)
 
-util.inherits(Generator, yeoman.generators.Base);
+Generator.prototype.buildViews = function createViewFiles () {
+  this.sourceRoot(path.join(__dirname, '../../templates/swig'))
 
-Generator.prototype.buildViews = function createViewFiles() {
-  this.sourceRoot(path.join(__dirname, '../../templates/swig'));
-
-  var index = 'index.swig';
+  var index = 'index.swig'
 
   if (!this.useExtras) {
-    index = 'index_bare.swig';
+    index = 'index_bare.swig'
   }
 
-  this.mkdir('views');
-  this.copy(path.join('views', index), 'views/index.swig');
-  this.template('_index.js', 'index.js');
-};
+  this.mkdir('views')
+  this.copy(path.join('views', index), 'views/index.swig')
+  this.template('_index.js', 'index.js')
+}
 
-Generator.prototype.install = function install() {
+Generator.prototype.install = function install () {
   if (this.options['skip-install']) {
-    return;
+    return
   }
 
   var pkgs = {
@@ -38,11 +37,11 @@ Generator.prototype.install = function install() {
       'swig'
     ],
     devDependencies: []
-  };
+  }
 
-  var done = this.async();
+  var done = this.async()
 
   this.npmInstall(pkgs.dependencies, {
     save: true
-  }, done);
-};
+  }, done)
+}

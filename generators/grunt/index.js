@@ -1,17 +1,16 @@
-'use strict';
+'use strict'
 
-var util = require('util');
-var TaskRunner = require('../../lib/taskrunner-base');
+var util = require('util')
+var TaskRunner = require('../../lib/taskrunner-base')
 
+var Generator = module.exports = function Generator () {
+  TaskRunner.apply(this, arguments)
+}
 
-var Generator = module.exports = function Generator() {
-  TaskRunner.apply(this, arguments);
-};
+util.inherits(Generator, TaskRunner)
 
-util.inherits(Generator, TaskRunner);
-
-Generator.prototype.grunt = function grunt() {
-  this.taskRunner = 'grunt';
+Generator.prototype.grunt = function grunt () {
+  this.taskRunner = 'grunt'
   this.pkgs = {
     dependencies: [],
     devDependencies: [
@@ -31,12 +30,12 @@ Generator.prototype.grunt = function grunt() {
     peerDependencies: [
       'grunt'
     ]
-  };
+  }
 
   this.pkgs.devDependencies.push(
     this.useSass ? 'grunt-contrib-sass' : 'grunt-csso'
-  );
+  )
 
-  this.buildTasksFile();
-  this.installDependencies();
-};
+  this.buildTasksFile()
+  this.installDependencies()
+}
