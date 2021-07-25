@@ -33,7 +33,7 @@ SassDoc theme documentation:
 * [Pascal Duez](https://twitter.com/pascalduez)
 * [Valérian Galliat](https://twitter.com/valeriangalliat)
 * [Fabrice Weinberg](https://twitter.com/fweinb)
-* [Hugo Giraudel](http://twitter.com/HugoGiraudel)
+* [Kitty Giraudel](http://twitter.com/KittyGiraudel)
 
 
 ## Licence
